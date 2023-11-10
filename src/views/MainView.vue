@@ -12,7 +12,7 @@ import { FwbButton } from 'flowbite-vue'
 	<fwb-button color="yellow">Yellow</fwb-button>
 	<fwb-button color="purple">Purple</fwb-button>
 	<fwb-button color="pink">Pink</fwb-button>
-  </template>
+</template>
 
 <style scoped>
 
