@@ -1,18 +1,36 @@
 <script setup>
-import { FwbButton } from 'flowbite-vue'
+import {
+  FwbNavbar,
+  FwbNavbarCollapse,
+  FwbNavbarLink,
+  FwbNavbarLogo,
+} from 'flowbite-vue'
 </script>
-
 <template>
-	<fwb-button color="default">Default</fwb-button>
-	<fwb-button color="alternative">Alternative</fwb-button>
-	<fwb-button color="dark">Dark</fwb-button>
-	<fwb-button color="light">Light</fwb-button>
-	<fwb-button color="green">Green</fwb-button>
-	<fwb-button color="red">Red</fwb-button>
-	<fwb-button color="yellow">Yellow</fwb-button>
-	<fwb-button color="purple">Purple</fwb-button>
-	<fwb-button color="pink">Pink</fwb-button>
-</template>
+	<fwb-navbar>
+	  <template #logo>
+		<fwb-navbar-logo alt="Flowbite logo" image-url="/images/logo.svg" link="#">
+		  Flowbite
+		</fwb-navbar-logo>
+	  </template>
+	  <template #default="{isShowMenu}">
+		<fwb-navbar-collapse :is-show-menu="isShowMenu">
+		  <fwb-navbar-link is-active link="#">
+			Home
+		  </fwb-navbar-link>
+		  <fwb-navbar-link link="#">
+			Services
+		  </fwb-navbar-link>
+		  <fwb-navbar-link link="#">
+			Pricing
+		  </fwb-navbar-link>
+		  <fwb-navbar-link link="#">
+			Contact
+		  </fwb-navbar-link>
+		</fwb-navbar-collapse>
+	  </template>
+	</fwb-navbar>
+  </template>
 
 <style scoped>
 
