@@ -1,10 +1,8 @@
-<script setup>
-import { FwbHeading } from "flowbite-vue";
-</script>
+<script setup></script>
 
 <template>
   <div class="text-center">
-    <fwb-heading tag="h1" color="text-green-400">이잉 게시판~</fwb-heading>
+    <h1 class="text-success my-3">게시판입니다</h1>
     <router-view></router-view>
   </div>
 </template>
