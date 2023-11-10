@@ -20,8 +20,8 @@ import {
 				<fwb-navbar-link is-active link="#">
 					Home
 				</fwb-navbar-link>
-				<fwb-navbar-link link="#">
-					Services
+				<fwb-navbar-link>
+					<RouterLink to="/board">게시판</RouterLink>
 				</fwb-navbar-link>
 				<fwb-navbar-link link="#">
 					Pricing
@@ -31,7 +31,7 @@ import {
 				</fwb-navbar-link>
 				</fwb-navbar-collapse>
 			</template>
-		</fwb-navbar>	
+		</fwb-navbar>
 	</div>
 </template>
 
