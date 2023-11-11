@@ -1,5 +1,4 @@
 <script setup>
-import { FwbA, FwbTableCell, FwbTableRow } from "flowbite-vue";
 </script>
 
 <template>
