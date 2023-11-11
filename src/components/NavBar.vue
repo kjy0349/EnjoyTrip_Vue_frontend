@@ -1,10 +1,10 @@
 <script setup></script>
 
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light" style="border-bottom: 1px solid;">
-    <div class="container-fluid">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light" style="border-bottom: 1px solid">
+    <div class="container-fluid d-flex">
       <div class="justify-content-start">
-        <router-link :to="{name: 'home'}" class="navbar-brand" href="#">EnjoyTrip</router-link>
+        <router-link :to="{ name: 'home' }" class="navbar-brand" href="#">EnjoyTrip</router-link>
       </div>
       <div class="justify-content-end">
         <button
@@ -21,7 +21,16 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-                <router-link :to="{ name: 'board' }" class="text-decoration-none text-black nav-link">게시판</router-link>
+              <router-link :to="{ name: 'board' }" class="text-decoration-none text-black nav-link"
+                >게시판</router-link
+              >
+            </li>
+            <li class="nav-item">
+              <router-link
+                :to="{ name: 'tripinfo' }"
+                class="text-decoration-none text-black nav-link"
+                >여행지 정보</router-link
+              >
             </li>
             <li class="nav-item dropdown">
               <a
@@ -32,7 +41,7 @@
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                Dropdown
+                로그인
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li><a class="dropdown-item" href="#">Action</a></li>
@@ -40,11 +49,6 @@
                 <li><hr class="dropdown-divider" /></li>
                 <li><a class="dropdown-item" href="#">Something else here</a></li>
               </ul>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"
-                >Disabled</a
-              >
             </li>
           </ul>
         </div>
