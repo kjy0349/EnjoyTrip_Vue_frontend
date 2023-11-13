@@ -10,8 +10,9 @@ function detailArticle(articleno, success, fail) {
   board.get(`/list/no/${articleno}`).then(success).catch(fail)
 }
 
-function searchArticleBySubject(subjet, success, fail) {
-  board.get(`/list/subject/${subject}`).then(success).catch(fail)
+function searchArticleBySubject(subject, success, fail) {
+  if (subject.value == '') listArticle(success, fail)
+  else board.get(`/list/subject/${subject.value}`).then(success).catch(fail)
 }
 
 function writeArticle(article, success, fail) {
@@ -25,4 +26,11 @@ function deleteArticle(articleno, success, fail) {
   board.delete(`/${articleno}`).then(success).catch(fail)
 }
 
-export { listArticle, writeArticle, detailArticle, modifyArticle, deleteArticle }
+export {
+  listArticle,
+  writeArticle,
+  detailArticle,
+  modifyArticle,
+  deleteArticle,
+  searchArticleBySubject
+}
