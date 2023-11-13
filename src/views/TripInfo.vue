@@ -61,6 +61,8 @@ const getList = () => {
       .get('info/attinfo/' + contentId + '/' + sidoCode + '/' + keyword)
       .then(({ data }) => {
         tripdata.value = data.data
+        console.log(tripdata.value)
+        makeList(tripdata.value)
       })
   } else {
     alert('검색어를 입력해주세요.')
@@ -253,8 +255,9 @@ onMounted(() => {
           </thead>
           <tbody>
             <tr v-for="(info, index) in tripdata" :key="index">
-              <!-- <td>{{ info }}</td> -->
-              <td>{{ info.contentId }}</td>
+              <td>
+                <img :src="info.firstImage" style="width: 100%; height: 100%" />
+              </td>
               <td>{{ info.title }}</td>
               <td>{{ info.addr1 }}</td>
               <td>{{ info.latitude }}</td>
