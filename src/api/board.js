@@ -5,8 +5,13 @@ const board = boardAxios()
 function listArticle(success, fail) {
   board.get(`/list`).then(success).catch(fail)
 }
+
 function detailArticle(articleno, success, fail) {
-  board.get(`/list/${articleno}`).then(success).catch(fail)
+  board.get(`/list/no/${articleno}`).then(success).catch(fail)
+}
+
+function searchArticleBySubject(subjet, success, fail) {
+  board.get(`/list/subject/${subject}`).then(success).catch(fail)
 }
 
 function writeArticle(article, success, fail) {

@@ -20,27 +20,27 @@
 </template>
 
 <script setup>
-import BoardListItem from "./item/BoardListItem.vue";
-import { useRouter } from "vue-router";
-import { listArticle } from "@/api/board";
-import { onMounted, ref } from "vue";
+import BoardListItem from './item/BoardListItem.vue'
+import { useRouter } from 'vue-router'
+import { listArticle } from '@/api/board'
+import { onMounted, ref } from 'vue'
 
-const articles = ref([]);
+const articles = ref([])
 
 onMounted(() => {
-  getArticles();
-});
+  getArticles()
+})
 
 const getArticles = () => {
   listArticle(
     ({ data }) => {
-      articles.value = data.data;
+      articles.value = data.data
     },
     (error) => {
-      console.log(error);
+      console.log(error)
     }
-  );
-};
+  )
+}
 </script>
 
 <style scoped></style>
