@@ -1,5 +1,5 @@
 <script setup>
-import BoardWriteItem from "./item/BoardWriteItem.vue";
+import BoardWriteItem from './item/BoardWriteItem.vue'
 </script>
 
 <template>
