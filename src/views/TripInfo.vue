@@ -2,7 +2,9 @@
 import { localAxios } from '@/util/http-commons'
 import { onMounted, reactive, ref } from 'vue'
 
+let isShow = false
 const local = localAxios()
+let map
 local.get('info/sidoinfo').then(({ data }) => {
   let sel = document.getElementById('search-area-sido')
   data.data.forEach((area) => {
@@ -12,40 +14,6 @@ local.get('info/sidoinfo').then(({ data }) => {
     sel.appendChild(opt)
   })
 })
-
-let positions // marker 배열.
-// function makeList(trips) {
-//   if (trips) {
-//     let tripList = ``
-//     positions = []
-//     document.querySelector('table').setAttribute('style', 'display: ;')
-//     trips.forEach((area) => {
-//       tripList += `
-//               <tr onclick="moveCenter(\${area.latitude}, \${area.longitude});">
-//                 <td><img src="\${area.firstImage}" width="40%" height="40%" onError="url(assets/img/sample.png)"></td>
-//                 <td> \${area.title}</td>
-//                 <td>\${area.addr1} \${area.addr2}</td>
-//                 <td>\${area.latitude}</td>
-//                 <td>\${area.longitude}</td>
-//               </tr>
-//             `
-//       let str = `\${area.firstImage}`
-//       if (!str) str = `\${area.secondImage}`
-//       let markerInfo = {
-//         title: area.title,
-//         latlng: new kakao.maps.LatLng(`\${area.latitude}`, `\${area.longitude}`),
-//         addr: `\${area.addr1} \${area.addr2}`,
-//         type: `\${area.contentTypeId}`,
-//         image: `\${area.firstImage}`
-//       }
-//       positions.push(markerInfo)
-//     })
-//     document.querySelector('#trip-list').innerHTML = tripList
-//     displayMarker()
-//   } else {
-//     alert('검색 결과가 존재하지 않습니다.')
-//   }
-// }
 
 const tripdata = ref({})
 
@@ -61,8 +29,8 @@ const getList = () => {
       .get('info/attinfo/' + contentId + '/' + sidoCode + '/' + keyword)
       .then(({ data }) => {
         tripdata.value = data.data
-        console.log(tripdata.value)
-        makeList(tripdata.value)
+        isShow = true
+        display(tripdata)
       })
   } else {
     alert('검색어를 입력해주세요.')
@@ -72,6 +40,99 @@ const getList = () => {
     // response = local.get('info/attinfo/' + contentId + '/' + sidoCode)
     // .then(({data}) => console.log(data))
   }
+}
+
+const markers = reactive([])
+const display = (data) => {
+  // 마커 이미지의 이미지 주소입니다
+  if (markers.length > 0) {
+    for (let marker of markers) {
+      marker.setMap(null)
+    }
+    markers = []
+  }
+  data.value.forEach(function (position) {
+    // 마커 이미지의 이미지 크기 입니다
+    let imageSize = new kakao.maps.Size(40, 40)
+    let imageSrc
+    switch (parseInt(position.contentTypeId)) {
+      case 12:
+        imageSrc = 'src/assets/markers/big-wheel.png'
+        break
+      case 14:
+        imageSrc = 'src/assets/markers/culture.png'
+        break
+      case 15:
+        imageSrc = 'src/assets/markers/concert.png'
+        break
+      case 25:
+        imageSrc = 'src/assets/markers/travel-bag.png'
+        break
+      case 28:
+        imageSrc = 'src/assets/markers/kitesurf.png'
+        break
+      case 32:
+        imageSrc = 'src/assets/markers/accommodation.png'
+        break
+      case 38:
+        imageSrc = 'src/assets/markers/shopping-cart.png'
+        break
+      case 39:
+        imageSrc = 'src/assets/markers/restaurant.png'
+        break
+    }
+    // 마커 이미지를 생성합니다
+    let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize)
+    // 마커를 생성합니다
+    let marker = new kakao.maps.Marker({
+      map: map, // 마커를 표시할 지도
+      position: position.latlng, // 마커를 표시할 위치
+      title: position.title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+      image: markerImage // 마커 이미지
+    })
+    markers.push(marker)
+
+    // 커스텀 오버레이에 표시할 컨텐츠 입니다
+    // 커스텀 오버레이는 아래와 같이 사용자가 자유롭게 컨텐츠를 구성하고 이벤트를 제어할 수 있기 때문에
+    // 별도의 이벤트 메소드를 제공하지 않습니다
+    let iwContent = ``
+    if (position.image) {
+      iwContent = `
+          <div class="infowindow p-3">
+            <div style="font-size: 14px">\${position.title}</div>
+            <img style="width: 200px; height:200px"src="\${position.image}">
+            <div style="font-size: 14px">\${position.addr}</div>
+            </div>` // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+    } else {
+      iwContent = `
+          <div class="infowindow p-3">
+            <div style="font-size: 14px">\${position.title}</div>
+            <div style="font-size: 14px">\${position.addr}</div>
+            </div>` // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+    }
+    // 인포윈도우를 생성합니다
+    let infowindow = new kakao.maps.InfoWindow({
+      content: iwContent
+    })
+
+    // 마커에 마우스오버 이벤트를 등록합니다
+    kakao.maps.event.addListener(marker, 'mouseover', function () {
+      // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
+      infowindow.open(map, marker)
+    })
+
+    // 마커에 마우스아웃 이벤트를 등록합니다
+    kakao.maps.event.addListener(marker, 'mouseout', function () {
+      // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
+      infowindow.close()
+    })
+    // 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
+  })
+  // 첫번째 검색 정보를 이용하여 지도 중심을 이동 시킵니다
+  map.setCenter(kakao.maps.LatLng(data.value[0].latitude, data.value[0].longitude))
+  // function moveCenter(lat, lng) {
+  //   map.setCenter(new kakao.maps.LatLng(lat, lng))
+  // }
 }
 // select로 검색어 기반으로 가져 온 다음에... makeList에 list로 넘겨줌
 
@@ -92,7 +153,7 @@ onMounted(() => {
         }
 
       // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-      let map = new kakao.maps.Map(mapContainer, mapOption)
+      map = new kakao.maps.Map(mapContainer, mapOption)
 
       // 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
       let mapTypeControl = new kakao.maps.MapTypeControl()
@@ -105,101 +166,6 @@ onMounted(() => {
       //// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
       let zoomControl = new kakao.maps.ZoomControl()
       map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT)
-
-      let markers = []
-      function displayMarker() {
-        // 마커 이미지의 이미지 주소입니다
-        if (markers.length > 0) {
-          for (let i = 0; i < markers.length; i++) {
-            markers[i].setMap(null)
-          }
-          markers = []
-        }
-        positions.forEach(function (position) {
-          // 마커 이미지의 이미지 크기 입니다
-          let imageSize = new kakao.maps.Size(40, 40)
-          let imageSrc
-          switch (parseInt(position.type)) {
-            case 12:
-              imageSrc = '${root}/assets/img/big-wheel.png'
-              break
-            case 14:
-              imageSrc = '${root}/assets/img/culture.png'
-              break
-            case 15:
-              imageSrc = '${root}/assets/img/concert.png'
-              break
-            case 25:
-              imageSrc = '${root}/assets/img/travel-bag.png'
-              break
-            case 28:
-              imageSrc = '${root}/assets/img/kitesurf.png'
-              break
-            case 32:
-              imageSrc = '${root}/assets/img/accommodation.png'
-              break
-            case 38:
-              imageSrc = '${root}/assets/img/shopping-cart.png'
-              break
-            case 39:
-              imageSrc = '${root}/assets/img/restaurant.png'
-              break
-          }
-          // 마커 이미지를 생성합니다
-          let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize)
-
-          // 마커를 생성합니다
-          let marker = new kakao.maps.Marker({
-            map: map, // 마커를 표시할 지도
-            position: position.latlng, // 마커를 표시할 위치
-            title: position.title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-            image: markerImage // 마커 이미지
-          })
-          markers.push(marker)
-
-          // 커스텀 오버레이에 표시할 컨텐츠 입니다
-          // 커스텀 오버레이는 아래와 같이 사용자가 자유롭게 컨텐츠를 구성하고 이벤트를 제어할 수 있기 때문에
-          // 별도의 이벤트 메소드를 제공하지 않습니다
-          let iwContent = ``
-          if (position.image.length != 0) {
-            iwContent = `
-          <div class="infowindow p-3">
-            <div style="font-size: 14px">\${position.title}</div>
-            <img style="width: 200px; height:200px"src="\${position.image}">
-            <div style="font-size: 14px">\${position.addr}</div>
-            </div>` // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-          } else {
-            iwContent = `
-          <div class="infowindow p-3">
-            <div style="font-size: 14px">\${position.title}</div>
-            <div style="font-size: 14px">\${position.addr}</div>
-            </div>` // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-          }
-          // 인포윈도우를 생성합니다
-          let infowindow = new kakao.maps.InfoWindow({
-            content: iwContent
-          })
-
-          // 마커에 마우스오버 이벤트를 등록합니다
-          kakao.maps.event.addListener(marker, 'mouseover', function () {
-            // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
-            infowindow.open(map, marker)
-          })
-
-          // 마커에 마우스아웃 이벤트를 등록합니다
-          kakao.maps.event.addListener(marker, 'mouseout', function () {
-            // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
-            infowindow.close()
-          })
-          // 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
-        })
-        // 첫번째 검색 정보를 이용하여 지도 중심을 이동 시킵니다
-        map.setCenter(positions[0].latlng)
-      }
-
-      function moveCenter(lat, lng) {
-        map.setCenter(new kakao.maps.LatLng(lat, lng))
-      }
     })
   }
 })
@@ -243,7 +209,7 @@ onMounted(() => {
       <div id="map" class="mt-3" style="width: 100%; height: 400px"></div>
       <!-- kakao map end -->
       <div class="row">
-        <table class="table table-striped">
+        <table class="table table-striped" v-show="isShow">
           <thead>
             <tr>
               <th>대표이미지</th>
@@ -256,7 +222,7 @@ onMounted(() => {
           <tbody>
             <tr v-for="(info, index) in tripdata" :key="index">
               <td>
-                <img :src="info.firstImage" style="width: 100%; height: 100%" />
+                <img :src="info.firstImage" style="width: 50%; height: 50%" />
               </td>
               <td>{{ info.title }}</td>
               <td>{{ info.addr1 }}</td>

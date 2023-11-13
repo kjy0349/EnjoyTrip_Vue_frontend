@@ -49,6 +49,12 @@ import { searchArticleBySubject } from '../../api/board'
 const articles = ref([])
 const searchValue = ref('')
 
+const router = useRouter()
+
+const moveWrite = () => {
+  router.push({ name: 'board-write' })
+}
+
 onMounted(() => {
   getArticles()
 })

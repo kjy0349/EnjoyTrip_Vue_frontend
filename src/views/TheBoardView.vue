@@ -1,12 +1,4 @@
-<script setup>
-import { useRouter } from 'vue-router'
-
-const router = useRouter()
-
-const moveWrite = () => {
-  router.push({ name: 'board-write' })
-}
-</script>
+<script setup></script>
 
 <template>
   <div class="container">
