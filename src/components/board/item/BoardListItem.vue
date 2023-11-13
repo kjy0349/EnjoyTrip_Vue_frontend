@@ -1,20 +1,27 @@
 <script setup>
+const props = defineProps({
+  article: Object,
+});
 </script>
 
 <template>
-  <fwb-table-row>
-    <fwb-table-cell>리스트 아이템임 ㅋ</fwb-table-cell>
-    <fwb-table-cell
-      ><router-link :to="{ name: 'board-view', params: { articleno: 1 } }">
-        리스트 아이템임 ㅋ</router-link
-      ></fwb-table-cell
-    >
-    <fwb-table-cell>리스트 아이템임 ㅋ</fwb-table-cell>
-    <fwb-table-cell>리스트 아이템임 ㅋ</fwb-table-cell>
-    <fwb-table-cell>
-      <fwb-a href="#"> Edit </fwb-a>
-    </fwb-table-cell>
-  </fwb-table-row>
+  <tr class="text-center">
+    <th scope="row">{{ article.articleNo }}</th>
+    <td class="text-center">
+      <router-link
+        :to="{
+          name: 'board-view',
+          params: { articleno: article.articleNo },
+        }"
+        class="article-title link-dark"
+      >
+        {{ article.subject }}
+      </router-link>
+    </td>
+    <td>{{ article.userId }}</td>
+    <td>{{ article.hit }}</td>
+    <td>{{ article.registerTime }}</td>
+  </tr>
 </template>
 
 <style scoped></style>
