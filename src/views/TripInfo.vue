@@ -1,6 +1,6 @@
 <script setup>
 import { localAxios } from '@/util/http-commons'
-import { onMounted, reactive } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 
 const local = localAxios()
 local.get('info/sidoinfo').then(({ data }) => {
@@ -14,40 +14,40 @@ local.get('info/sidoinfo').then(({ data }) => {
 })
 
 let positions // marker 배열.
-function makeList(trips) {
-  if (trips) {
-    let tripList = ``
-    positions = []
-    document.querySelector('table').setAttribute('style', 'display: ;')
-    trips.forEach((area) => {
-      tripList += `
-              <tr onclick="moveCenter(\${area.latitude}, \${area.longitude});">
-                <td><img src="\${area.firstImage}" width="40%" height="40%" onError="url(assets/img/sample.png)"></td>
-                <td> \${area.title}</td>
-                <td>\${area.addr1} \${area.addr2}</td>
-                <td>\${area.latitude}</td>
-                <td>\${area.longitude}</td>
-              </tr>
-            `
-      let str = `\${area.firstImage}`
-      if (!str) str = `\${area.secondImage}`
-      let markerInfo = {
-        title: area.title,
-        latlng: new kakao.maps.LatLng(`\${area.latitude}`, `\${area.longitude}`),
-        addr: `\${area.addr1} \${area.addr2}`,
-        type: `\${area.contentTypeId}`,
-        image: `\${area.firstImage}`
-      }
-      positions.push(markerInfo)
-    })
-    document.querySelector('#trip-list').innerHTML = tripList
-    displayMarker()
-  } else {
-    alert('검색 결과가 존재하지 않습니다.')
-  }
-}
+// function makeList(trips) {
+//   if (trips) {
+//     let tripList = ``
+//     positions = []
+//     document.querySelector('table').setAttribute('style', 'display: ;')
+//     trips.forEach((area) => {
+//       tripList += `
+//               <tr onclick="moveCenter(\${area.latitude}, \${area.longitude});">
+//                 <td><img src="\${area.firstImage}" width="40%" height="40%" onError="url(assets/img/sample.png)"></td>
+//                 <td> \${area.title}</td>
+//                 <td>\${area.addr1} \${area.addr2}</td>
+//                 <td>\${area.latitude}</td>
+//                 <td>\${area.longitude}</td>
+//               </tr>
+//             `
+//       let str = `\${area.firstImage}`
+//       if (!str) str = `\${area.secondImage}`
+//       let markerInfo = {
+//         title: area.title,
+//         latlng: new kakao.maps.LatLng(`\${area.latitude}`, `\${area.longitude}`),
+//         addr: `\${area.addr1} \${area.addr2}`,
+//         type: `\${area.contentTypeId}`,
+//         image: `\${area.firstImage}`
+//       }
+//       positions.push(markerInfo)
+//     })
+//     document.querySelector('#trip-list').innerHTML = tripList
+//     displayMarker()
+//   } else {
+//     alert('검색 결과가 존재하지 않습니다.')
+//   }
+// }
 
-const tripdata = reactive([])
+const tripdata = ref({})
 
 const getList = () => {
   let keyword = document.getElementById('search-keyword').value
@@ -204,7 +204,6 @@ onMounted(() => {
 </script>
 
 <template>
-  {{ tripdata }}
   <div class="content row">
     <div class="col-md-2"></div>
     <div class="col-md-8">
@@ -234,7 +233,7 @@ onMounted(() => {
           placeholder="검색어"
           aria-label="검색어"
         />
-        <button id="btn-search" class="btn btn-outline-primary" type="button" @click="getList()">
+        <button id="btn-search" class="btn btn-outline-primary" type="button" @click="getList">
           검색
         </button>
       </div>
@@ -242,7 +241,7 @@ onMounted(() => {
       <div id="map" class="mt-3" style="width: 100%; height: 400px"></div>
       <!-- kakao map end -->
       <div class="row">
-        <table class="table table-striped" style="display: none">
+        <table class="table table-striped">
           <thead>
             <tr>
               <th>대표이미지</th>
@@ -252,7 +251,16 @@ onMounted(() => {
               <th>경도</th>
             </tr>
           </thead>
-          <tbody id="trip-list"></tbody>
+          <tbody>
+            <tr v-for="(info, index) in tripdata" :key="index">
+              <!-- <td>{{ info }}</td> -->
+              <td>{{ info.contentId }}</td>
+              <td>{{ info.title }}</td>
+              <td>{{ info.addr1 }}</td>
+              <td>{{ info.latitude }}</td>
+              <td>{{ info.longitude }}</td>
+            </tr>
+          </tbody>
         </table>
       </div>
       <!-- 관광지 검색 end -->
