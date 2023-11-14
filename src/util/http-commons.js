@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const { VITE_VUE_API_URL, VITE_VUE_API_URL_BOARD } = import.meta.env;
+const { VITE_VUE_API_URL, VITE_VUE_API_URL_BOARD, VITE_VUE_API_URL_USER } =
+  import.meta.env;
 
 function localAxios() {
   const instance = axios.create({
@@ -22,4 +23,14 @@ function boardAxios() {
   return instance;
 }
 
-export { localAxios, boardAxios };
+function userAxios() {
+  const instance = axios.create({
+    baseURL: VITE_VUE_API_URL_USER,
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+    },
+  });
+  return instance;
+}
+
+export { localAxios, boardAxios, userAxios };
