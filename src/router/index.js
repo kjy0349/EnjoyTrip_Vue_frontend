@@ -58,6 +58,11 @@ const router = createRouter({
           name: "user-join",
           component: () => import("@/components/user/UserJoin.vue"),
         },
+        {
+          path: "join",
+          name: "user-info",
+          component: () => import("@/components/user/UserInfo.vue"),
+        },
       ],
     },
   ],

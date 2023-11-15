@@ -65,7 +65,11 @@
                 </li>
                 <li><hr class="dropdown-divider" /></li>
                 <li>
-                  <a class="dropdown-item" href="#">Something else here</a>
+                  <a class="dropdown-item" href="#"
+                    ><RouterLink :to="{ name: 'user-info' }"
+                      >회원정보</RouterLink
+                    ></a
+                  >
                 </li>
               </ul>
             </li>
