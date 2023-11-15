@@ -33,4 +33,14 @@ function userAxios() {
   return instance;
 }
 
-export { localAxios, boardAxios, userAxios };
+function commentAxios() {
+  const instance = axios.create({
+    baseURL: VITE_VUE_API_URL_USER,
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+    },
+  });
+  return instance;
+}
+
+export { localAxios, boardAxios, userAxios, commentAxios };

@@ -2,6 +2,7 @@
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { detailArticle, deleteArticle } from "@/api/board";
+import CommentItem from "./comment/CommentItem.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -10,6 +11,7 @@ const router = useRouter();
 const { articleno } = route.params;
 
 const article = ref({});
+const comment = ref("");
 
 onMounted(() => {
   getArticle();
@@ -57,7 +59,7 @@ function onDeleteArticle() {
       <div class="col-lg-10 text-start">
         <div class="row my-2">
           <h2 class="text-secondary px-5">
-            {{ article.articleNo }}. {{ article.subject }}
+            {{ article.subject }}
           </h2>
         </div>
         <div class="row">
@@ -70,7 +72,7 @@ function onDeleteArticle() {
               <p>
                 <span class="fw-bold">{{ article.userId }}</span> <br />
                 <span class="text-secondary fw-light">
-                  {{ article.registerTime }}1 조회 : {{ article.hit }}
+                  {{ article.registerTime }} 조회 : {{ article.hit }}
                 </span>
               </p>
             </div>
@@ -80,6 +82,26 @@ function onDeleteArticle() {
           <div class="text-secondary">
             {{ article.content }}
           </div>
+          <div class="divider mt-3 mb-3"></div>
+          <div class="input-group mb-3">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Recipient's username"
+              aria-label="Recipient's username"
+              aria-describedby="button-addon2"
+            />
+            <button
+              class="btn btn-outline-secondary"
+              type="button"
+              id="button-addon2"
+            >
+              Button
+            </button>
+          </div>
+          <CommentItem></CommentItem><CommentItem></CommentItem
+          ><CommentItem></CommentItem>
+
           <div class="divider mt-3 mb-3"></div>
           <div class="d-flex justify-content-end">
             <button
