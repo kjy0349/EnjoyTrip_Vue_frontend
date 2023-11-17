@@ -1,51 +1,41 @@
 <script setup>
-import { ref } from "vue";
-import { userLogin } from "../../api/user";
-import { useRouter } from "vue-router";
-import axios from "axios";
+import { ref } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useRouter } from 'vue-router'
+import { useMemberStore } from '@/api/member'
 
-const router = useRouter();
+const router = useRouter()
 
-const userId = ref("");
-const password = ref("");
+const memberStore = useMemberStore()
 
-const user = ref({});
+const { isLogin } = storeToRefs(memberStore)
+const { userLogin, getUserInfo } = memberStore
+// const { changeMenuState } = useMenuStore()
 
-const onLogin = () => {
-  // 잘 넘어왔어
-  userLogin(
-    userId.value,
-    password.value,
-    ({ data }) => {
-      if (data.success) {
-        console.log("login성공!");
-        user.value = data.data;
-        console.log(user.value);
-      } else {
-        console.log("login 실패!");
-      }
-    },
-    (error) => {
-      console.log("login 실패!");
-    }
-  );
-  //   axios.post("http://localhost:8080/user/login", {
-  //     userId: userId.value,
-  //     password: password.value,
-  //   });
-  moveHome();
-};
-const moveHome = () => {
-  router.push({
-    name: "home",
-  });
-};
+const loginUser = ref({
+  userId: '',
+  userPwd: ''
+})
+
+const onLogin = async () => {
+  console.log('login ing!!!! !!!')
+  await userLogin(loginUser.value)
+  let token = sessionStorage.getItem('accessToken')
+  console.log('111. ', token)
+  console.log('isLogin: ', isLogin)
+  if (isLogin) {
+    console.log('로그인 성공아닌가???')
+    getUserInfo(token)
+    // changeMenuState()
+  }
+  router.push('/')
+}
 </script>
 
 <template>
   <div class="form-floating mb-3">
     <input
-      v-model="userId"
+      v-model="loginUser.userId"
       type="id"
       class="form-control"
       id="floatingInput"
@@ -55,7 +45,7 @@ const moveHome = () => {
   </div>
   <div class="form-floating mb-3">
     <input
-      v-model="password"
+      v-model="loginUser.userPwd"
       type="password"
       class="form-control"
       id="floatingPassword"
@@ -64,12 +54,7 @@ const moveHome = () => {
     <label for="floatingPassword">Password</label>
   </div>
 
-  <button
-    type="button"
-    class="btn btn-secondary"
-    :to="{ name: 'home' }"
-    @click="onLogin"
-  >
+  <button type="button" class="btn btn-secondary" :to="{ name: 'home' }" @click="onLogin">
     로그인
   </button>
 </template>

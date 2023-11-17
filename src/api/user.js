@@ -1,19 +1,27 @@
-import { userAxios } from "../util/http-commons";
-import axios from "axios";
+import { userAxios } from '@/util/http-commons'
+const user = userAxios()
 
-const user = userAxios();
-
-function userLogin(userId, password, success, fail) {
-  // 여기까진 잘 옴
-  user
-    .post(`/login`, JSON.stringify({ userId, password }))
-    .then(success)
-    .catch(fail);
+async function userConfirm(params, success, fail) {
+  console.log('param', params)
+  await user.post(`/login`, params).then(success).catch(fail)
+  console.log('userConfirm ok')
 }
-function userJoin(userDto, success, fail) {
-  // 여기까진 잘 옴
-  console.log(userDto);
-  user.post(`/join`, JSON.stringify(userDto)).then(success).catch(fail);
+async function userJoin(userDto, success, fail) {
+  user.post(`/join`, JSON.stringify(userDto)).then(success).catch(fail)
 }
 
-export { userLogin, userJoin };
+async function findById(userid, success, fail) {
+  user.defaults.headers['Authorization'] = sessionStorage.getItem('accessToken')
+  await user.get(`/info/${userid}`).then(success).catch(fail)
+}
+
+async function tokenRegeneration(user, success, fail) {
+  user.defaults.headers['refreshToken'] = sessionStorage.getItem('refreshToken') //axios header에 refresh-token 셋팅
+  await user.post(`/refresh`, user).then(success).catch(fail)
+}
+
+async function logout(userid, success, fail) {
+  await user.get(`/logout/${userid}`).then(success).catch(fail)
+}
+
+export { userConfirm, findById, tokenRegeneration, logout, userJoin }

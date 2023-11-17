@@ -3,6 +3,7 @@ const local = localAxios()
 
 function getCityOptions(selectId) {
   local.get('info/sidoinfo').then(({ data }) => {
+    console.log(data)
     let sel = document.getElementById(selectId)
     data.data.forEach((area) => {
       let opt = document.createElement('option')
