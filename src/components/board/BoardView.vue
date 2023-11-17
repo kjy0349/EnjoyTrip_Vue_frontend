@@ -2,6 +2,7 @@
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { detailArticle, deleteArticle } from "@/api/board";
+import { writeComment, getComments, deleteComment } from "@/api/comment";
 import CommentItem from "./comment/CommentItem.vue";
 
 const route = useRoute();
@@ -41,7 +42,6 @@ const comments = ref([
     registerTime: "3",
   },
 ]);
-const commentList = ref([]);
 
 onMounted(() => {
   getArticle();
@@ -76,6 +76,10 @@ function onDeleteArticle() {
   );
   moveList();
 }
+
+const getCommentList = () => {
+  // TODO: articleno에 종속돼있는 comment 리스트들 받아오기
+};
 
 function onCreateComment() {
   console.log(comments.value.content);

@@ -2,8 +2,17 @@ import { boardAxios } from "../util/http-commons";
 
 const board = boardAxios();
 
-function listArticle(success, fail) {
-  board.get(`/list`).then(success).catch(fail);
+function listArticle(pgno, pageSize, success, fail) {
+  console.log("4");
+  board
+    .get(`/list?pgno=${pgno}&pageSize=${pageSize}`)
+    .then(success)
+    .catch(fail);
+}
+
+function totalPage(success, fail) {
+  console.log("2");
+  board.get(`/total`).then(success).catch(fail);
 }
 
 function detailArticle(articleno, success, fail) {
@@ -28,6 +37,7 @@ function deleteArticle(articleno, success, fail) {
 
 export {
   listArticle,
+  totalPage,
   writeArticle,
   detailArticle,
   modifyArticle,

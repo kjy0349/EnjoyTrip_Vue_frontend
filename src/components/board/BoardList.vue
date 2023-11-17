@@ -11,12 +11,19 @@
       />
     </div>
     <div class="col-1 my-3">
-      <button id="btn-search" class="btn btn-outline-primary" type="button" @click="search">
+      <button
+        id="btn-search"
+        class="btn btn-outline-primary"
+        type="button"
+        @click="search"
+      >
         검색
       </button>
     </div>
     <div class="col-2 my-3">
-      <button type="button" class="btn btn-secondary" @click="moveWrite">글쓰기</button>
+      <button type="button" class="btn btn-secondary" @click="moveWrite">
+        글쓰기
+      </button>
     </div>
   </div>
   <table class="table table-striped">
@@ -37,50 +44,85 @@
       ></BoardListItem>
     </tbody>
   </table>
+  <a-pagination
+    v-model:current="param.pgno"
+    :total="total"
+    @change="onPageChanged"
+    show-less-items
+  />
 </template>
 
 <script setup>
-import BoardListItem from './item/BoardListItem.vue'
-import { useRouter } from 'vue-router'
-import { listArticle } from '@/api/board'
-import { onMounted, ref } from 'vue'
-import { searchArticleBySubject } from '../../api/board'
+import BoardListItem from "./item/BoardListItem.vue";
+import { useRouter } from "vue-router";
+import { listArticle, totalPage } from "@/api/board";
+import { onMounted, ref } from "vue";
+import { searchArticleBySubject } from "../../api/board";
 
-const articles = ref([])
-const searchValue = ref('')
-
-const router = useRouter()
+const articles = ref([]);
+const searchValue = ref("");
+const total = ref(0);
+const router = useRouter();
+const param = ref({
+  pgno: 1,
+  // 몇 개의 리스트 받아올꺼야
+  pageSize: 10,
+});
 
 const moveWrite = () => {
-  router.push({ name: 'board-write' })
-}
+  router.push({ name: "board-write" });
+};
 
 onMounted(() => {
-  getArticles()
-})
+  getTotal();
+  getArticles();
+});
 
 const search = () => {
   searchArticleBySubject(
     searchValue,
     ({ data }) => {
-      articles.value = data.data
+      articles.value = data.data;
     },
     (error) => {
-      console.log(error)
+      console.log(error);
     }
-  )
-}
+  );
+};
+
+const getTotal = () => {
+  console.log("1");
+  totalPage(
+    ({ data }) => {
+      total.value = data.data;
+      console.log("total : " + total.value);
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+};
 
 const getArticles = () => {
+  console.log("3");
   listArticle(
+    param.value.pgno,
+    param.value.pageSize,
     ({ data }) => {
-      articles.value = data.data
+      articles.value = data.data;
     },
     (error) => {
-      console.log(error)
+      console.log(error);
     }
-  )
-}
+  );
+};
+
+const onPageChanged = () => {
+  console.log("아몰라");
+  console.log(param.value.pgno);
+  getArticles();
+  console.log(articles.value);
+};
 </script>
 
 <style scoped></style>
