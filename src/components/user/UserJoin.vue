@@ -1,36 +1,36 @@
 <script setup>
-import { ref, watch } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { userJoin } from "../../api/user";
+import { ref, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { userJoin } from '../../api/user'
 
-const route = useRoute();
-const router = useRouter();
+const route = useRoute()
+const router = useRouter()
 
 const user = ref({
-  userId: "",
-  userName: "",
-  userPass: "",
-  emailId: "",
-  emailDomain: "",
-});
+  userId: '',
+  userName: '',
+  userPass: '',
+  emailId: '',
+  emailDomain: ''
+})
 
 const onJoin = () => {
   userJoin(
     user.value,
     ({ data }) => {
-      console.log("회원가입 성공");
-      moveHome();
+      console.log('회원가입 성공')
+      moveHome()
     },
     (error) => {
-      console.log("회원가입 실패");
+      console.log('회원가입 실패')
     }
-  );
-};
+  )
+}
 const moveHome = () => {
   router.push({
-    name: "home",
-  });
-};
+    name: 'home'
+  })
+}
 </script>
 
 <template>
@@ -106,12 +106,7 @@ const moveHome = () => {
             <option value="google.com">google.com</option>
           </select>
         </div>
-        <button
-          type="button"
-          id="btn-join"
-          class="w-100 btn signup-btn"
-          @click="onJoin"
-        >
+        <button type="button" id="btn-join" class="w-100 btn signup-btn" @click="onJoin">
           회원가입
         </button>
       </div>
