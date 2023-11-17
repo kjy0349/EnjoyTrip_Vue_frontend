@@ -61,6 +61,7 @@ const router = createRouter({
         {
           path: 'modify/:articleno',
           name: 'board-modify',
+          beforeEnter: onlyAuthUser,
           component: () => import('@/components/board/BoardModify.vue')
         }
       ]
@@ -82,7 +83,7 @@ const router = createRouter({
           component: () => import('@/components/user/UserJoin.vue')
         },
         {
-          path: 'join',
+          path: 'info',
           name: 'user-info',
           beforeEnter: onlyAuthUser,
           component: () => import('@/components/user/UserInfo.vue')

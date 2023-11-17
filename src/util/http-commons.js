@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { httpStatusCode } from './http-status'
 
 const { VITE_VUE_API_URL, VITE_VUE_API_URL_BOARD, VITE_VUE_API_URL_USER } = import.meta.env
 

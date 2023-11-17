@@ -1,95 +1,96 @@
 <script setup>
-import { ref, onMounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { detailArticle, deleteArticle } from "@/api/board";
-import { writeComment, getComments, deleteComment } from "@/api/comment";
-import CommentItem from "./comment/CommentItem.vue";
+import { ref, onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { detailArticle, deleteArticle } from '@/api/board'
+import { writeComment, getComments, deleteComment } from '@/api/comment'
+import CommentItem from './comment/CommentItem.vue'
 
-const route = useRoute();
-const router = useRouter();
+const route = useRoute()
+const router = useRouter()
 
 // const articleno = ref(route.params.articleno);
-const { articleno } = route.params;
+const { articleno } = route.params
 
-const article = ref({});
+const article = ref({})
 const comments = ref([
   {
     commentNo: 0,
-    userId: "",
+    userId: '',
     articleNo: 0,
-    content: "",
-    registerTime: "",
+    content: '',
+    registerTime: ''
   },
   {
     commentNo: 1,
-    userId: "1",
+    userId: '1',
     articleNo: 1,
-    content: "댓글1",
-    registerTime: "1",
+    content: '댓글1',
+    registerTime: '1'
   },
   {
     commentNo: 2,
-    userId: "2",
+    userId: '2',
     articleNo: 2,
-    content: "댓글2",
-    registerTime: "2",
+    content: '댓글2',
+    registerTime: '2'
   },
   {
     commentNo: 3,
-    userId: "3",
+    userId: '3',
     articleNo: 3,
-    content: "댓글3",
-    registerTime: "3",
-  },
-]);
+    content: '댓글3',
+    registerTime: '3'
+  }
+])
 
 onMounted(() => {
-  getArticle();
-});
+  getArticle()
+})
 
 const getArticle = () => {
   detailArticle(articleno, ({ data }) => {
-    article.value = data.data;
-    console.log(article.value);
-  });
-};
+    article.value = data.data
+    console.log(article.value)
+  })
+}
 
 const moveList = () => {
-  router.push({ name: "board" });
-};
+  router.push({ name: 'board' })
+}
 function moveModify() {
-  router.push({ name: "board-modify", params: { articleno } });
+  console.log(articleno)
+  router.push({ name: 'board-modify', params: { articleno } })
 }
 
 function onDeleteArticle() {
   // const { articleno } = route.params;
-  console.log(articleno + "번글 삭제하러 가자!!!");
+  console.log(articleno + '번글 삭제하러 가자!!!')
   // API 호출
   deleteArticle(
     articleno,
     ({ data }) => {
-      console.log("글 삭제 성공");
+      console.log('글 삭제 성공')
     },
     (error) => {
-      console.log("글 삭제 실패");
+      console.log('글 삭제 실패')
     }
-  );
-  moveList();
+  )
+  moveList()
 }
 
 const getCommentList = () => {
   // TODO: articleno에 종속돼있는 comment 리스트들 받아오기
-};
+}
 
 function onCreateComment() {
-  console.log(comments.value.content);
-  alert(comments.value.content);
-  comments.value.articleNo = articleno;
+  console.log(comments.value.content)
+  alert(comments.value.content)
+  comments.value.articleNo = articleno
   // TODO: 세션에 있는 유저의 ID값을 가져와서 content.value.userId값에 넣을 것
   // 그리고 writeComment함수를 통해 댓글을 저장할 것
   // 그리고 이 페이지를 새로고침 할 것
 
-  router.go();
+  router.go()
 }
 </script>
 
@@ -132,10 +133,7 @@ function onCreateComment() {
           <div class="row d-flex justify-content-center">
             <!-- <div class="col-md-8 col-lg-6"> -->
             <div>
-              <div
-                class="card shadow-0 border"
-                style="background-color: #f0f2f5"
-              >
+              <div class="card shadow-0 border" style="background-color: #f0f2f5">
                 <div class="card-body p-4">
                   <div class="form-outline mb-4">
                     <input
@@ -158,25 +156,13 @@ function onCreateComment() {
           </div>
           <div class="divider mt-3 mb-3"></div>
           <div class="d-flex justify-content-end">
-            <button
-              type="button"
-              class="btn btn-outline-primary mb-3"
-              @click="moveList"
-            >
+            <button type="button" class="btn btn-outline-primary mb-3" @click="moveList">
               글목록
             </button>
-            <button
-              type="button"
-              class="btn btn-outline-success mb-3 ms-1"
-              @click="moveModify"
-            >
+            <button type="button" class="btn btn-outline-success mb-3 ms-1" @click="moveModify">
               글수정
             </button>
-            <button
-              type="button"
-              class="btn btn-outline-danger mb-3 ms-1"
-              @click="onDeleteArticle"
-            >
+            <button type="button" class="btn btn-outline-danger mb-3 ms-1" @click="onDeleteArticle">
               글삭제
             </button>
           </div>
