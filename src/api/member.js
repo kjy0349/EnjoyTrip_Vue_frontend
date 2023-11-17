@@ -46,10 +46,10 @@ export const useMemberStore = defineStore('memberStore', () => {
     )
   }
 
-  const getUserInfo = (token) => {
+  const getUserInfo = async (token) => {
     let decodeToken = jwtDecode(token)
     console.log('2. decodeToken', decodeToken)
-    findById(
+    await findById(
       decodeToken.userId,
       (response) => {
         if (response.status === httpStatusCode.OK) {
@@ -65,7 +65,6 @@ export const useMemberStore = defineStore('memberStore', () => {
           error.response.status
         )
         isValidToken.value = false
-
         await tokenRegenerate()
       }
     )
@@ -85,6 +84,7 @@ export const useMemberStore = defineStore('memberStore', () => {
       },
       async (error) => {
         // HttpStatus.UNAUTHORIZE(401) : RefreshToken 기간 만료 >> 다시 로그인!!!!
+        console.log(error)
         if (error.response.status === httpStatusCode.UNAUTHORIZED) {
           console.log('갱신 실패')
           // 다시 로그인 전 DB에 저장된 RefreshToken 제거.

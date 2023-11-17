@@ -10,23 +10,16 @@ const memberStore = useMemberStore()
 
 const { isLogin } = storeToRefs(memberStore)
 const { userLogin, getUserInfo } = memberStore
-// const { changeMenuState } = useMenuStore()
-
 const loginUser = ref({
   userId: '',
   userPwd: ''
 })
 
 const onLogin = async () => {
-  console.log('login ing!!!! !!!')
   await userLogin(loginUser.value)
   let token = sessionStorage.getItem('accessToken')
-  console.log('111. ', token)
-  console.log('isLogin: ', isLogin)
   if (isLogin) {
-    console.log('로그인 성공아닌가???')
     getUserInfo(token)
-    // changeMenuState()
   }
   router.push('/')
 }

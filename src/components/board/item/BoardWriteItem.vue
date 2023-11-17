@@ -2,13 +2,15 @@
 import { ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { writeArticle, detailArticle, modifyArticle } from '../../../api/board'
+import { useMemberStore } from '@/api/member'
+import { storeToRefs } from 'pinia'
+const memberStore = useMemberStore()
+const userInfo = memberStore.userInfo
 
 const router = useRouter()
 const route = useRoute()
 
 const props = defineProps({ type: String })
-
-const isUseId = ref(false)
 
 const article = ref({
   articleNo: 0,
@@ -25,10 +27,15 @@ if (props.type === 'modify') {
   console.log(articleno + '번글 얻어와서 수정할거야')
   // API 호출
   detailArticle(articleno, ({ data }) => {
+    const userId = memberStore.userInfo.userId
     article.value = data.data
-    console.log(article.value)
+    if (userId !== article.value.userId) {
+      alert('본인이 쓰지 않은 글은 수정 할 수 없습니다.')
+      router.push({ name: 'board-list' })
+    }
   })
-  isUseId.value = true
+} else {
+  article.value.userId = userInfo.userId
 }
 
 const subjectErrMsg = ref('')
@@ -110,9 +117,9 @@ function moveList() {
       <input
         type="text"
         class="form-control"
-        v-model="article.userId"
-        :disabled="isUseId"
         placeholder="작성자ID..."
+        :value="userInfo.userId"
+        disabled
       />
     </div>
     <div class="mb-3">

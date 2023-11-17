@@ -1,7 +1,7 @@
 <script setup>
 const props = defineProps({
-  article: Object,
-});
+  article: Object
+})
 </script>
 
 <template>
@@ -11,7 +11,7 @@ const props = defineProps({
       <router-link
         :to="{
           name: 'board-view',
-          params: { articleno: article.articleNo },
+          params: { articleno: article.articleNo }
         }"
         class="article-title link-dark"
       >
