@@ -4,7 +4,9 @@ import { useRoute, useRouter } from 'vue-router'
 import { detailArticle, deleteArticle } from '@/api/board'
 import { writeComment, getComments, deleteComment } from '@/api/comment'
 import CommentItem from './comment/CommentItem.vue'
+import { useMemberStore } from '@/api/member'
 
+const memberStore = useMemberStore()
 const route = useRoute()
 const router = useRouter()
 
@@ -12,45 +14,21 @@ const router = useRouter()
 const { articleno } = route.params
 
 const article = ref({})
-const comments = ref([
-  {
-    commentNo: 0,
-    userId: '',
-    articleNo: 0,
-    content: '',
-    registerTime: ''
-  },
-  {
-    commentNo: 1,
-    userId: '1',
-    articleNo: 1,
-    content: '댓글1',
-    registerTime: '1'
-  },
-  {
-    commentNo: 2,
-    userId: '2',
-    articleNo: 2,
-    content: '댓글2',
-    registerTime: '2'
-  },
-  {
-    commentNo: 3,
-    userId: '3',
-    articleNo: 3,
-    content: '댓글3',
-    registerTime: '3'
-  }
-])
+const comments = ref([])
+const writeCommentObj = ref({
+  userId: '',
+  articleNo: '',
+  content: ''
+})
 
 onMounted(() => {
   getArticle()
+  getCommentList()
 })
 
 const getArticle = () => {
   detailArticle(articleno, ({ data }) => {
     article.value = data.data
-    console.log(article.value)
   })
 }
 
@@ -58,7 +36,6 @@ const moveList = () => {
   router.push({ name: 'board' })
 }
 function moveModify() {
-  console.log(articleno)
   router.push({ name: 'board-modify', params: { articleno } })
 }
 
@@ -80,17 +57,40 @@ function onDeleteArticle() {
 
 const getCommentList = () => {
   // TODO: articleno에 종속돼있는 comment 리스트들 받아오기
+  getComments(
+    articleno,
+    ({ data }) => {
+      comments.value = data.data
+    },
+    (error) => {
+      console.log(error)
+    }
+  )
 }
 
 function onCreateComment() {
-  console.log(comments.value.content)
-  alert(comments.value.content)
-  comments.value.articleNo = articleno
-  // TODO: 세션에 있는 유저의 ID값을 가져와서 content.value.userId값에 넣을 것
-  // 그리고 writeComment함수를 통해 댓글을 저장할 것
-  // 그리고 이 페이지를 새로고침 할 것
-
-  router.go()
+  if (memberStore.userInfo == null) {
+    alert('로그인 후 댓글을 달아주세요!')
+    router.push({ name: 'user-login' })
+  } else {
+    writeCommentObj.value.articleNo = articleno
+    writeCommentObj.value.userId = memberStore.userInfo.userId
+    // TODO: 세션에 있는 유저의 ID값을 가져와서 content.value.userId값에 넣을 것
+    // 그리고 writeComment함수를 통해 댓글을 저장할 것
+    // 그리고 이 페이지를 새로고침 할 것
+    console.log('1 , onCreateComment')
+    writeComment(
+      writeCommentObj.value,
+      () => {
+        console.log('댓글 등록 성공')
+        router.go()
+      },
+      (error) => {
+        console.log('댓글 등록 에러')
+      }
+    )
+    // router.go()
+  }
 }
 </script>
 
@@ -141,7 +141,7 @@ function onCreateComment() {
                       id="addANote"
                       class="form-control"
                       placeholder="댓글"
-                      v-model="comments.content"
+                      v-model="writeCommentObj.content"
                       @keyup.enter="onCreateComment"
                     />
                   </div>

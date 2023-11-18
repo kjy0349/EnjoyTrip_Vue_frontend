@@ -1,7 +1,12 @@
 import axios from 'axios'
 import { httpStatusCode } from './http-status'
 
-const { VITE_VUE_API_URL, VITE_VUE_API_URL_BOARD, VITE_VUE_API_URL_USER } = import.meta.env
+const {
+  VITE_VUE_API_URL,
+  VITE_VUE_API_URL_BOARD,
+  VITE_VUE_API_URL_USER,
+  VITE_VUE_API_URL_COMMENT
+} = import.meta.env
 
 function localAxios() {
   const instance = axios.create({
@@ -93,7 +98,7 @@ function userAxios() {
 
 function commentAxios() {
   const instance = axios.create({
-    baseURL: VITE_VUE_API_URL_USER,
+    baseURL: VITE_VUE_API_URL_COMMENT,
     headers: {
       'Content-Type': 'application/json;charset=utf-8'
     }

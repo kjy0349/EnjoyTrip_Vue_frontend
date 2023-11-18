@@ -6,9 +6,9 @@ async function userConfirm(params, success, fail) {
   await user.post(`/login`, params).then(success).catch(fail)
   console.log('userConfirm ok')
 }
-async function userJoin(userDto, success, fail) {
-  user.post(`/join`, JSON.stringify(userDto)).then(success).catch(fail)
-}
+// async function userJoin(userDto, success, fail) {
+//   user.post(`/join`, JSON.stringify(userDto)).then(success).catch(fail)
+// }
 
 async function findById(userid, success, fail) {
   user.defaults.headers['Authorization'] = sessionStorage.getItem('accessToken')
@@ -24,4 +24,4 @@ async function logout(userid, success, fail) {
   await user.get(`/logout/${userid}`).then(success).catch(fail)
 }
 
-export { userConfirm, findById, tokenRegeneration, logout, userJoin }
+export { userConfirm, findById, tokenRegeneration, logout }
