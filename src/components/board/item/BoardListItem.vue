@@ -11,7 +11,7 @@ const props = defineProps({
       <router-link
         :to="{
           name: 'board-view',
-          params: { articleno: article.articleNo }
+          params: { articleno: article.articleNo, userId: article.userId }
         }"
         class="article-title link-dark"
       >

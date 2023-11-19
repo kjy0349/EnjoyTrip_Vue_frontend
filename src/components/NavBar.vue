@@ -1,4 +1,9 @@
-<script setup></script>
+<script setup>
+import { ref } from 'vue'
+import { useMemberStore } from '@/api/member'
+
+const memberStore = useMemberStore()
+</script>
 
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light" style="border-bottom: 1px solid">
@@ -41,31 +46,38 @@
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                로그인
+                회원 탭
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li>
-                  <RouterLink
-                    :to="{ name: 'user' }"
-                    class="dropdown-item text-decoration-none text-black"
-                    >로그인</RouterLink
-                  >
-                </li>
-                <li>
-                  <RouterLink
-                    :to="{ name: 'user-join' }"
-                    class="dropdown-item text-decoration-none text-black"
-                    >회원가입</RouterLink
-                  >
-                </li>
-                <li><hr class="dropdown-divider" /></li>
-                <li>
-                  <RouterLink
-                    :to="{ name: 'user-info' }"
-                    class="dropdown-item text-decoration-none text-black"
-                    >회원정보</RouterLink
-                  >
-                </li>
+                <template v-if="memberStore.userInfo == null">
+                  <li>
+                    <RouterLink
+                      :to="{ name: 'user' }"
+                      class="dropdown-item text-decoration-none text-black"
+                      >로그인</RouterLink
+                    >
+                  </li>
+                  <li>
+                    <RouterLink
+                      :to="{ name: 'user-join' }"
+                      class="dropdown-item text-decoration-none text-black"
+                      >회원가입</RouterLink
+                    >
+                  </li>
+                </template>
+                <template v-else>
+                  <li>
+                    <RouterLink
+                      :to="{ name: 'user-info' }"
+                      class="dropdown-item text-decoration-none text-black"
+                      >회원정보</RouterLink
+                    >
+                  </li>
+                  <li>
+                    <!-- 로그 아웃 할줄 몰라잉 -->
+                    로그아웃
+                  </li>
+                </template>
               </ul>
             </li>
           </ul>
