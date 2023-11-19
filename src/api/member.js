@@ -123,6 +123,7 @@ export const useMemberStore = defineStore(
             isLogin.value = false
             userInfo.value = null
             isValidToken.value = false
+            router.push({ name: 'home' })
           } else {
             console.error('유저 정보 없음!!!!')
           }

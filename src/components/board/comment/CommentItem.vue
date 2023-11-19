@@ -16,14 +16,6 @@ const props = defineProps({
   comment: Object
 })
 
-// const userInfo = ref({
-//   userId: '',
-//   userName: '',
-//   userPass: '',
-//   emailId: '',
-//   emailDomain: '',
-//   imgSrc: ''
-// })
 const userInfo = ref(memberStore.userInfo)
 const cmt = ref(props.comment)
 
