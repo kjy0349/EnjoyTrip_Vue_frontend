@@ -1,4 +1,9 @@
-<script setup></script>
+<script setup>
+import { storeToRefs } from 'pinia'
+import { useMemberStore } from '@/api/member'
+const store = useMemberStore()
+const { isLogin, userInfo } = storeToRefs(store)
+</script>
 
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light" style="border-bottom: 1px solid">
@@ -46,6 +51,7 @@
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
                   <RouterLink
+                    v-show="!isLogin"
                     :to="{ name: 'user' }"
                     class="dropdown-item text-decoration-none text-black"
                     >로그인</RouterLink
@@ -53,19 +59,25 @@
                 </li>
                 <li>
                   <RouterLink
+                    v-show="!isLogin"
                     :to="{ name: 'user-join' }"
                     class="dropdown-item text-decoration-none text-black"
                     >회원가입</RouterLink
                   >
                 </li>
-                <li><hr class="dropdown-divider" /></li>
-                <li>
-                  <RouterLink
-                    :to="{ name: 'user-info' }"
-                    class="dropdown-item text-decoration-none text-black"
-                    >회원정보</RouterLink
-                  >
+                <li v-show="isLogin" class="dropdown-item text-decoration-none text-black">
+                  <a @click="store.userLogout(userInfo.userId)">로그아웃</a>
                 </li>
+                <div v-show="isLogin">
+                  <li><hr class="dropdown-divider" /></li>
+                  <li>
+                    <RouterLink
+                      :to="{ name: 'user-info' }"
+                      class="dropdown-item text-decoration-none text-black"
+                      >회원정보</RouterLink
+                    >
+                  </li>
+                </div>
               </ul>
             </li>
           </ul>

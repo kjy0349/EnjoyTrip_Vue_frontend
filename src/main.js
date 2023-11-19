@@ -17,6 +17,8 @@ app.use(pinia)
 app.use(router)
 app.use(Antd)
 
+pinia.use(piniaPluginPersistedstate)
+
 router.isReady().then(() => {
   app.mount('#app')
 })
