@@ -144,7 +144,7 @@ function onCreateComment() {
               </p>
             </div>
           </div>
-          <div class="col-md-4 align-self-center text-end">댓글 : {{ commentLen }}</div>
+          <div class="col-md-4 align-self-center text-end">댓글 : {{ comments.length }}</div>
           <div class="divider mb-3"></div>
           <div class="text-secondary">
             {{ article.content }}
@@ -154,9 +154,14 @@ function onCreateComment() {
           <div class="row d-flex justify-content-center">
             <!-- <div class="col-md-8 col-lg-6"> -->
             <div>
+              <CommentItem
+                v-for="comment in comments"
+                :key="comment.commentNo"
+                :comment="comment"
+              />
               <div class="card shadow-0 border" style="background-color: #f0f2f5">
                 <div class="card-body p-4">
-                  <div class="form-outline mb-4">
+                  <!-- <div class="form-outline mb-4">
                     <input
                       type="text"
                       id="addANote"
@@ -164,13 +169,38 @@ function onCreateComment() {
                       placeholder="댓글"
                       v-model="writeCommentObj.content"
                       @keyup.enter="onCreateComment"
+                      style="display: inline-block"
                     />
+                    <button type="button" class="btn btn-primary btn-sm">댓글 작성</button>
+                  </div> -->
+                  <div class="card-footer py-3 border-0" style="background-color: #f8f9fa">
+                    <div class="d-flex flex-start w-100">
+                      <img
+                        class="rounded-circle shadow-1-strong me-3"
+                        src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp"
+                        alt="avatar"
+                        width="40"
+                        height="40"
+                      />
+                      <div class="form-outline w-100">
+                        <textarea
+                          type="text"
+                          id="addANote"
+                          class="form-control"
+                          placeholder="댓글 작성..."
+                          v-model="writeCommentObj.content"
+                          @keyup.enter="onCreateComment"
+                          rows="3"
+                        />
+                      </div>
+                    </div>
+                    <div class="float-end mt-2 pt-1">
+                      <button type="button" class="btn btn-primary btn-sm" @click="onCreateComment">
+                        댓글 작성
+                      </button>
+                      <button type="button" class="btn btn-outline-primary btn-sm">취소</button>
+                    </div>
                   </div>
-                  <CommentItem
-                    v-for="comment in comments"
-                    :key="comment.commentNo"
-                    :comment="comment"
-                  />
                 </div>
               </div>
             </div>

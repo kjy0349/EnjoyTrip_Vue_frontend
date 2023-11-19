@@ -1,8 +1,8 @@
 <script setup>
-import { ref } from 'vue'
+import { storeToRefs } from 'pinia'
 import { useMemberStore } from '@/api/member'
-
-const memberStore = useMemberStore()
+const store = useMemberStore()
+const { isLogin, userInfo } = storeToRefs(store)
 </script>
 
 <template>
@@ -49,23 +49,27 @@ const memberStore = useMemberStore()
                 회원 탭
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <template v-if="memberStore.userInfo == null">
-                  <li>
-                    <RouterLink
-                      :to="{ name: 'user' }"
-                      class="dropdown-item text-decoration-none text-black"
-                      >로그인</RouterLink
-                    >
-                  </li>
-                  <li>
-                    <RouterLink
-                      :to="{ name: 'user-join' }"
-                      class="dropdown-item text-decoration-none text-black"
-                      >회원가입</RouterLink
-                    >
-                  </li>
-                </template>
-                <template v-else>
+                <li>
+                  <RouterLink
+                    v-show="!isLogin"
+                    :to="{ name: 'user' }"
+                    class="dropdown-item text-decoration-none text-black"
+                    >로그인</RouterLink
+                  >
+                </li>
+                <li>
+                  <RouterLink
+                    v-show="!isLogin"
+                    :to="{ name: 'user-join' }"
+                    class="dropdown-item text-decoration-none text-black"
+                    >회원가입</RouterLink
+                  >
+                </li>
+                <li v-show="isLogin" class="dropdown-item text-decoration-none text-black">
+                  <a @click="store.userLogout(userInfo.userId)">로그아웃</a>
+                </li>
+                <div v-show="isLogin">
+                  <li><hr class="dropdown-divider" /></li>
                   <li>
                     <RouterLink
                       :to="{ name: 'user-info' }"
@@ -73,11 +77,7 @@ const memberStore = useMemberStore()
                       >회원정보</RouterLink
                     >
                   </li>
-                  <li>
-                    <!-- 로그 아웃 할줄 몰라잉 -->
-                    로그아웃
-                  </li>
-                </template>
+                </div>
               </ul>
             </li>
           </ul>
