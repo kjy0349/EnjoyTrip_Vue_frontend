@@ -1,8 +1,10 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import { getCityOptions, getAttractionList } from '@/api/map.js'
+import draggable from 'vuedraggable'
 const isShow = ref(false)
-const tripdata = ref({})
+const tripdata = ref()
+const plandata = ref([])
 
 let map = null
 
@@ -16,6 +18,8 @@ async function showAttractionList() {
     isShow.value = true
     displayMarkers(tripdata)
   } else isShow.value = false
+
+  console.log(tripdata.value)
 }
 
 const markers = ref([])
@@ -72,7 +76,7 @@ const displayMarkers = (data) => {
     // 커스텀 오버레이는 아래와 같이 사용자가 자유롭게 컨텐츠를 구성하고 이벤트를 제어할 수 있기 때문에
     // 별도의 이벤트 메소드를 제공하지 않습니다
     let iwContent = ``
-    console.log(position)
+    // console.log(position)
     if (position.firstImage) {
       iwContent = `
           <div class="infowindow p-3">
@@ -159,7 +163,7 @@ onMounted(() => {
 
 <template>
   <div class="content row">
-    <div class="col-md-2"></div>
+    <div class="col-md-1"></div>
     <div class="col-md-8">
       <!-- 관광지 검색 start -->
       <div class="d-flex my-3">
@@ -210,23 +214,59 @@ onMounted(() => {
               <th>경도</th>
             </tr>
           </thead>
-          <tbody>
-            <tr v-for="(info, index) in tripdata" :key="index">
-              <td>
-                <img :src="info.firstImage" style="width: 50%; height: 50%" />
-              </td>
-              <td>{{ info.title }}</td>
-              <td>{{ info.addr1 }}</td>
-              <td>{{ info.latitude }}</td>
-              <td>{{ info.longitude }}</td>
-            </tr>
-          </tbody>
+          <!-- v-model로 양방향 바인딩, tag에 어떤 html요소로 작동할지 -->
+          <!-- template안에 #item태그를 달고 그안에 요소는 element로받는다( 다른 이름 안돼) -->
+          <!-- 그리고 무조건 한 요소로 묶어줘야함 안그러면 에러남, 난 tr로 묶었음 -->
+          <!-- 그리고 저 안에 주석도 달면 안됨... 요소로 인식하는듯 ㅋㅋ -->
+          <!-- :group 하면 이렇게 옵션을 지정해 줄 수 있는데, pull: clone하게 되면 복사를 하고 put: false를 하면 값이 이쪽으로는 들어오지 못한다
+          한마디로 복제밖에 못한다. 그리고 name이 중요한데 이 name이 같은 놈들끼리 드래그 앤 드롭을 할 수 있기 때문이다 -->
+          <draggable
+            v-model="tripdata"
+            tag="tbody"
+            :options="dragOptions"
+            :group="{ name: 'place', pull: 'clone', put: false }"
+            item-key="contentId"
+          >
+            <template #item="{ element }">
+              <tr>
+                <td>
+                  <img :src="element.firstImage" style="width: 50%; height: 50%" />
+                </td>
+                <td>{{ element.title }}</td>
+                <td>{{ element.addr1 }}</td>
+                <td>{{ element.latitude }}</td>
+                <td>{{ element.longitude }}</td>
+              </tr>
+            </template>
+          </draggable>
         </table>
       </div>
       <!-- 관광지 검색 end -->
     </div>
+    <div class="col-md-3">
+      <div class="row my-3">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+          <p class="justify-text-center">여행경로추가</p>
+        </div>
+        <div class="col-md-3"></div>
+      </div>
+      <draggable
+        v-model="plandata"
+        tag="div"
+        :options="dragOptions"
+        group="place"
+        item-key="contentId"
+      >
+        <template #item="{ element }">
+          <div class="my-2">
+            <img :src="element.firstImage" style="width: 50%; height: 50%" />
+            {{ element.title }}
+          </div>
+        </template>
+      </draggable>
+    </div>
   </div>
-  <div class="col-md-2"></div>
 </template>
 
 <style scoped></style>

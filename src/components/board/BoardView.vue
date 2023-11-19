@@ -5,16 +5,20 @@ import { detailArticle, deleteArticle } from '@/api/board'
 import { writeComment, getComments, deleteComment } from '@/api/comment'
 import CommentItem from './comment/CommentItem.vue'
 import { useMemberStore } from '@/api/member'
+import axios from 'axios'
 
+const { VITE_VUE_API_URL_USER } = import.meta.env
 const memberStore = useMemberStore()
 const route = useRoute()
 const router = useRouter()
+const props = defineProps({ userId: String })
 
 // const articleno = ref(route.params.articleno);
-const { articleno } = route.params
+const { articleno, userId } = route.params
 
 const article = ref({})
 const comments = ref([])
+const commentLen = ref(0)
 const writeCommentObj = ref({
   userId: '',
   articleNo: '',
@@ -23,6 +27,7 @@ const writeCommentObj = ref({
 
 onMounted(() => {
   getArticle()
+  loadImg()
   getCommentList()
 })
 
@@ -30,6 +35,23 @@ const getArticle = () => {
   detailArticle(articleno, ({ data }) => {
     article.value = data.data
   })
+}
+
+const img = ref('')
+
+const loadImg = () => {
+  axios
+    .get(VITE_VUE_API_URL_USER + `/file/${userId}`, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    .then((data) => {
+      img.value = data.config.url
+    })
+    .catch((error) => {
+      console.log('에러')
+    })
 }
 
 const moveList = () => {
@@ -61,6 +83,8 @@ const getCommentList = () => {
     articleno,
     ({ data }) => {
       comments.value = data.data
+      console.log('댓글 개수')
+      commentLen.value = data.data.length
     },
     (error) => {
       console.log(error)
@@ -111,10 +135,7 @@ function onCreateComment() {
         <div class="row">
           <div class="col-md-8">
             <div class="clearfix align-content-center">
-              <img
-                class="avatar me-2 float-md-start bg-light p-2"
-                src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg"
-              />
+              <img class="avatar me-2 float-md-start bg-light p-2 image" :src="img" />
               <p>
                 <span class="fw-bold">{{ article.userId }}</span> <br />
                 <span class="text-secondary fw-light">
@@ -202,4 +223,12 @@ function onCreateComment() {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.image {
+  width: 150px;
+  height: 100px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+</style>

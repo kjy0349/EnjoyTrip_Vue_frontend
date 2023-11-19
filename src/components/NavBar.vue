@@ -51,7 +51,7 @@ const { isLogin, userInfo } = storeToRefs(store)
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                로그인
+                회원 탭
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
