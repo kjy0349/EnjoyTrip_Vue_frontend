@@ -2,6 +2,9 @@
 import { onMounted, ref } from 'vue'
 import { getCityOptions, getAttractionList } from '@/api/map.js'
 import draggable from 'vuedraggable'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 const isShow = ref(false)
 const tripdata = ref()
 const plandata = ref([])
@@ -159,6 +162,10 @@ onMounted(() => {
     }
   }
 })
+
+const moveTripPlan = () => {
+  router.push({ name: 'trip-plan', params: { places: JSON.stringify(plandata.value) } })
+}
 </script>
 
 <template>
@@ -264,7 +271,7 @@ onMounted(() => {
       <div class="row my-3">
         <div class="col-md-3"></div>
         <div class="col-md-6">
-          <button class="btn btn-danger" @click="onCommentDelete">Go to Plan</button>
+          <button class="btn btn-danger" @click="moveTripPlan">Go to Plan</button>
         </div>
         <div class="col-md-3"></div>
       </div>
