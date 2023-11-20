@@ -5,19 +5,15 @@
     <h3 class="fw-semibold">여러 관광지를 보여드립니다!</h3>
   </div>
   <div class="p-5">
-    <div
-      id="carouselExampleAutoplaying"
-      class="carousel slide"
-      data-bs-ride="carousel"
-    >
+    <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-inner">
         <div class="carousel-item active">
           <img src="@/assets/img/boat.jpg" class="w-100" alt="..." />
         </div>
-        <div class="carousel-item">
+        <div class="carousel-item active">
           <img src="@/assets/img/boat.jpg" class="w-100" alt="..." />
         </div>
-        <div class="carousel-item">
+        <div class="carousel-item active">
           <img src="@/assets/img/boat.jpg" class="w-100" alt="..." />
         </div>
       </div>
@@ -114,9 +110,7 @@
   </div> -->
 
   <div class="container">
-    <h1 class="fw-light text-center text-lg-start mt-4 mb-0">
-      Thumbnail Gallery
-    </h1>
+    <h1 class="fw-light text-center text-lg-start mt-4 mb-0">Thumbnail Gallery</h1>
 
     <hr class="mt-2 mb-5" />
 
