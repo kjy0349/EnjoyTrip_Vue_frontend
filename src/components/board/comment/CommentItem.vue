@@ -82,12 +82,12 @@ const onCommentDelete = () => {
           <img :src="img" alt="avatar" width="25" height="25" />
           <p class="small mb-0 ms-2">{{ comment.userId }}</p>
         </div>
-        <!-- <div class="d-flex flex-row align-items-center">
+        <div class="d-flex flex-row align-items-center">
           <p class="small text-muted mb-0">추천수</p>
           <i class="far fa-thumbs-up mx-2 fa-xs text-black" style="margin-top: -0.16rem"></i>
           <p class="small text-muted mb-0">3</p>
-        </div> -->
-      </div>
+        </div>
+</div>
     </div>
   </div> -->
   <div class="card mb-4">
