@@ -163,8 +163,7 @@ onMounted(() => {
 
 <template>
   <div class="content row">
-    <div class="col-md-1"></div>
-    <div class="col-md-8">
+    <div class="col-md-6">
       <!-- 관광지 검색 start -->
       <div class="d-flex my-3">
         <select id="search-area-sido" class="form-select me-2">
@@ -201,47 +200,43 @@ onMounted(() => {
         </button>
       </div>
       <!-- kakao map start -->
-      <div id="map" class="mt-3" style="width: 100%; height: 400px"></div>
+      <div id="map" class="mt-3" style="width: 100%; height: 80vh"></div>
       <!-- kakao map end -->
-      <div class="row">
-        <table class="table table-striped" v-show="isShow">
-          <thead>
-            <tr>
-              <th>대표이미지</th>
-              <th>관광지명</th>
-              <th>주소</th>
-              <th>위도</th>
-              <th>경도</th>
-            </tr>
-          </thead>
-          <!-- v-model로 양방향 바인딩, tag에 어떤 html요소로 작동할지 -->
-          <!-- template안에 #item태그를 달고 그안에 요소는 element로받는다( 다른 이름 안돼) -->
-          <!-- 그리고 무조건 한 요소로 묶어줘야함 안그러면 에러남, 난 tr로 묶었음 -->
-          <!-- 그리고 저 안에 주석도 달면 안됨... 요소로 인식하는듯 ㅋㅋ -->
-          <!-- :group 하면 이렇게 옵션을 지정해 줄 수 있는데, pull: clone하게 되면 복사를 하고 put: false를 하면 값이 이쪽으로는 들어오지 못한다
-          한마디로 복제밖에 못한다. 그리고 name이 중요한데 이 name이 같은 놈들끼리 드래그 앤 드롭을 할 수 있기 때문이다 -->
-          <draggable
-            v-model="tripdata"
-            tag="tbody"
-            :options="dragOptions"
-            :group="{ name: 'place', pull: 'clone', put: false }"
-            item-key="contentId"
-          >
-            <template #item="{ element }">
-              <tr>
-                <td>
-                  <img :src="element.firstImage" style="width: 50%; height: 50%" />
-                </td>
-                <td>{{ element.title }}</td>
-                <td>{{ element.addr1 }}</td>
-                <td>{{ element.latitude }}</td>
-                <td>{{ element.longitude }}</td>
-              </tr>
-            </template>
-          </draggable>
-        </table>
-      </div>
       <!-- 관광지 검색 end -->
+    </div>
+    <div class="col-md-3">
+      <table class="table table-striped">
+        <!-- v-model로 양방향 바인딩, tag에 어떤 html요소로 작동할지 -->
+        <!-- template안에 #item태그를 달고 그안에 요소는 element로받는다( 다른 이름 안돼) -->
+        <!-- 그리고 무조건 한 요소로 묶어줘야함 안그러면 에러남, 난 tr로 묶었음 -->
+        <!-- 그리고 저 안에 주석도 달면 안됨... 요소로 인식하는듯 ㅋㅋ -->
+        <!-- :group 하면 이렇게 옵션을 지정해 줄 수 있는데, pull: clone하게 되면 복사를 하고 put: false를 하면 값이 이쪽으로는 들어오지 못한다
+          한마디로 복제밖에 못한다. 그리고 name이 중요한데 이 name이 같은 놈들끼리 드래그 앤 드롭을 할 수 있기 때문이다 -->
+
+        <draggable
+          v-model="tripdata"
+          tag="tbody"
+          :options="dragOptions"
+          :group="{ name: 'place', pull: 'clone', put: false }"
+          item-key="contentId"
+        >
+          <template #item="{ element }">
+            <tr>
+              <td>
+                <img :src="element.firstImage" style="width: 120px; height: 120px" />
+              </td>
+              <td>
+                <tr>
+                  <td>{{ element.title }}</td>
+                </tr>
+                <tr>
+                  <td>{{ element.addr1 }}</td>
+                </tr>
+              </td>
+            </tr>
+          </template>
+        </draggable>
+      </table>
     </div>
     <div class="col-md-3">
       <div class="row my-3">
@@ -259,8 +254,8 @@ onMounted(() => {
         item-key="contentId"
       >
         <template #item="{ element }">
-          <div class="my-2">
-            <img :src="element.firstImage" style="width: 50%; height: 50%" />
+          <div class="m-2">
+            <img :src="element.firstImage" style="width: 120px; height: 120px" />
             {{ element.title }}
           </div>
         </template>
