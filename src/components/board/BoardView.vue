@@ -11,25 +11,39 @@ const { VITE_VUE_API_URL_USER } = import.meta.env
 const memberStore = useMemberStore()
 const route = useRoute()
 const router = useRouter()
-const props = defineProps({ userId: String })
+// const props = defineProps({ userId: String })
 
 // const articleno = ref(route.params.articleno);
 const { articleno, userId } = route.params
 
 const article = ref({})
 const comments = ref([])
-const commentLen = ref(0)
 const writeCommentObj = ref({
   userId: '',
   articleNo: '',
   content: ''
 })
 
-onMounted(() => {
-  getArticle()
-  loadImg()
-  getCommentList()
+const sessionUserId = ref('')
+
+const articleImg = ref('')
+const sessionUserImg = ref('')
+
+onMounted(async () => {
+  await getArticle()
+  await getSession()
+  await loadArticleImg()
+  await getCommentList()
 })
+
+const getSession = () => {
+  if (memberStore.userInfo == null) {
+    sessionUserId.value = ''
+  } else {
+    sessionUserId.value = memberStore.userInfo.userId
+    loadSessionUserImg()
+  }
+}
 
 const getArticle = () => {
   detailArticle(articleno, ({ data }) => {
@@ -37,9 +51,7 @@ const getArticle = () => {
   })
 }
 
-const img = ref('')
-
-const loadImg = () => {
+const loadArticleImg = () => {
   axios
     .get(VITE_VUE_API_URL_USER + `/file/${userId}`, {
       headers: {
@@ -47,7 +59,23 @@ const loadImg = () => {
       }
     })
     .then((data) => {
-      img.value = data.config.url
+      articleImg.value = data.config.url
+    })
+    .catch((error) => {
+      console.log('에러')
+    })
+}
+
+const loadSessionUserImg = () => {
+  const userId = sessionUserId.value
+  axios
+    .get(VITE_VUE_API_URL_USER + `/file/${userId}`, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    .then((data) => {
+      sessionUserImg.value = data.config.url
     })
     .catch((error) => {
       console.log('에러')
@@ -84,7 +112,6 @@ const getCommentList = () => {
     ({ data }) => {
       comments.value = data.data
       console.log('댓글 개수')
-      commentLen.value = data.data.length
     },
     (error) => {
       console.log(error)
@@ -135,7 +162,7 @@ function onCreateComment() {
         <div class="row">
           <div class="col-md-8">
             <div class="clearfix align-content-center">
-              <img class="avatar me-2 float-md-start bg-light p-2 image" :src="img" />
+              <img class="avatar me-2 float-md-start bg-light p-2 image" :src="articleImg" />
               <p>
                 <span class="fw-bold">{{ article.userId }}</span> <br />
                 <span class="text-secondary fw-light">
@@ -177,11 +204,13 @@ function onCreateComment() {
                     <div class="d-flex flex-start w-100">
                       <img
                         class="rounded-circle shadow-1-strong me-3"
-                        src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp"
+                        :src="sessionUserImg"
                         alt="avatar"
                         width="40"
                         height="40"
+                        v-if="sessionUserImg != ''"
                       />
+
                       <div class="form-outline w-100">
                         <textarea
                           type="text"

@@ -79,7 +79,7 @@ const onCommentDelete = () => {
           <i class="far fa-thumbs-up mx-2 fa-xs text-black" style="margin-top: -0.16rem"></i>
           <p class="small text-muted mb-0">3</p>
         </div>
-      </div>
+</div>
     </div>
   </div> -->
   <div class="card mb-4">

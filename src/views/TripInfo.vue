@@ -252,6 +252,7 @@ onMounted(() => {
         :options="dragOptions"
         group="place"
         item-key="contentId"
+        draggable="false"
       >
         <template #item="{ element }">
           <div class="m-2">
@@ -260,6 +261,13 @@ onMounted(() => {
           </div>
         </template>
       </draggable>
+      <div class="row my-3">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+          <button class="btn btn-danger" @click="onCommentDelete">Go to Plan</button>
+        </div>
+        <div class="col-md-3"></div>
+      </div>
     </div>
   </div>
 </template>
