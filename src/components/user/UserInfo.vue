@@ -11,6 +11,7 @@ const userInfo = memberStore.userInfo
 
 onMounted(() => {
   loadImg()
+  // loadTripRoute()
 })
 
 const loadImg = () => {
@@ -70,6 +71,7 @@ const loadImg = () => {
           </div>
         </div>
       </div>
+      <div>별점</div>
     </div>
   </div>
 </template>

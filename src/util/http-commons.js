@@ -6,6 +6,7 @@ const {
   VITE_VUE_API_URL_BOARD,
   VITE_VUE_API_URL_USER,
   VITE_VUE_API_URL_COMMENT,
+  VITE_VUE_API_URL_INFO,
   VITE_VUE_API_URL_TBOARD,
   VITE_VUE_API_URL_TCOMMENT
 } = import.meta.env
@@ -119,6 +120,15 @@ function commentAxios() {
   return instance
 }
 
+function infoAxios() {
+  const instance = axios.create({
+    baseURL: VITE_VUE_API_URL_INFO,
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8'
+    }
+  })
+  return instance
+}
 function tcommentAxios() {
   const instance = axios.create({
     baseURL: VITE_VUE_API_URL_TCOMMENT,
@@ -129,4 +139,4 @@ function tcommentAxios() {
   return instance
 }
 
-export { localAxios, boardAxios, userAxios, commentAxios, tboardAxios, tcommentAxios }
+export { localAxios, boardAxios, userAxios, commentAxios, tboardAxios, tcommentAxios, infoAxios }

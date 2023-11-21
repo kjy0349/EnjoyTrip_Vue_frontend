@@ -3,11 +3,13 @@ import { onMounted, ref } from 'vue'
 import { getCityOptions, getAttractionList } from '@/api/map.js'
 import draggable from 'vuedraggable'
 import { useRouter } from 'vue-router'
+import { usePlanStore } from '@/api/plan'
 
 const router = useRouter()
 const isShow = ref(false)
 const tripdata = ref()
 const plandata = ref([])
+const planStore = usePlanStore()
 
 let map = null
 
@@ -164,7 +166,8 @@ onMounted(() => {
 })
 
 const moveTripPlan = () => {
-  router.push({ name: 'trip-plan', params: { places: JSON.stringify(plandata.value) } })
+  planStore.addPlan(plandata.value)
+  router.push({ name: 'trip-plan' })
 }
 </script>
 
