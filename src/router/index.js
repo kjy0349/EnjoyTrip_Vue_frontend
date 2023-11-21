@@ -91,7 +91,7 @@ const router = createRouter({
       ]
     },
     {
-      path: '/trip-plan/:places',
+      path: '/trip-plan',
       name: 'trip-plan',
       component: () => import('@/views/TripPlanView.vue')
     }

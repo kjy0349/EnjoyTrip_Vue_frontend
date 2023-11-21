@@ -3,11 +3,13 @@ import { onMounted, ref } from 'vue'
 import { getCityOptions, getAttractionList } from '@/api/map.js'
 import draggable from 'vuedraggable'
 import { useRouter } from 'vue-router'
+import { usePlanStore } from '@/api/plan'
 
 const router = useRouter()
 const isShow = ref(false)
 const tripdata = ref()
 const plandata = ref([])
+const planStore = usePlanStore()
 
 let map = null
 
@@ -164,7 +166,8 @@ onMounted(() => {
 })
 
 const moveTripPlan = () => {
-  router.push({ name: 'trip-plan', params: { places: JSON.stringify(plandata.value) } })
+  planStore.addPlan(plandata.value)
+  router.push({ name: 'trip-plan' })
 }
 </script>
 
@@ -223,7 +226,6 @@ const moveTripPlan = () => {
         <draggable
           v-model="tripdata"
           tag="tbody"
-          :options="dragOptions"
           :group="{ name: 'place', pull: 'clone', put: false }"
           item-key="contentId"
         >
@@ -253,14 +255,7 @@ const moveTripPlan = () => {
         </div>
         <div class="col-md-3"></div>
       </div>
-      <draggable
-        v-model="plandata"
-        tag="div"
-        :options="dragOptions"
-        group="place"
-        item-key="contentId"
-        draggable="false"
-      >
+      <draggable v-model="plandata" tag="div" group="place" item-key="contentId" draggable="false">
         <template #item="{ element }">
           <div class="m-2">
             <img :src="element.firstImage" style="width: 120px; height: 120px" />

@@ -5,7 +5,8 @@ const {
   VITE_VUE_API_URL,
   VITE_VUE_API_URL_BOARD,
   VITE_VUE_API_URL_USER,
-  VITE_VUE_API_URL_COMMENT
+  VITE_VUE_API_URL_COMMENT,
+  VITE_VUE_API_URL_INFO
 } = import.meta.env
 
 function localAxios() {
@@ -106,4 +107,14 @@ function commentAxios() {
   return instance
 }
 
-export { localAxios, boardAxios, userAxios, commentAxios }
+function infoAxios() {
+  const instance = axios.create({
+    baseURL: VITE_VUE_API_URL_INFO,
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8'
+    }
+  })
+  return instance
+}
+
+export { localAxios, boardAxios, userAxios, commentAxios, infoAxios }
