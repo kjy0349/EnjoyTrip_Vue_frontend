@@ -67,6 +67,37 @@ const router = createRouter({
       ]
     },
     {
+      path: '/tboard',
+      name: 'tboard',
+      component: () => import('@/views/TripBoardView.vue'),
+      redirect: { name: 'tboard-list' },
+      children: [
+        {
+          path: 'tlist',
+          name: 'tboard-list',
+          component: () => import('@/components/trip_board/TripBoardList.vue')
+        },
+        {
+          path: 'view/:articleno?/:userId',
+          name: 'tboard-view',
+          beforeEnter: onlyAuthUser,
+          component: () => import('@/components/trip_board/TripBoardDetailView.vue')
+        },
+        {
+          path: 'write',
+          name: 'tboard-write',
+          beforeEnter: onlyAuthUser,
+          component: () => import('@/components/trip_board/TripBoardWrite.vue')
+        },
+        {
+          path: 'modify/:articleno',
+          name: 'board-modify',
+          beforeEnter: onlyAuthUser,
+          component: () => import('@/components/trip_board/TripBoardModify.vue')
+        }
+      ]
+    },
+    {
       path: '/user',
       name: 'user',
       component: () => import('@/views/TheUserView.vue'),

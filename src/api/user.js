@@ -15,9 +15,9 @@ async function findById(userid, success, fail) {
   await user.get(`/info/${userid}`).then(success).catch(fail)
 }
 
-async function tokenRegeneration(user, success, fail) {
-  user.defaults.headers['refreshToken'] = sessionStorage.getItem('refreshToken') //axios header에 refresh-token 셋팅
-  await user.post(`/refresh`, user).then(success).catch(fail)
+async function tokenRegeneration(userinfo, success, fail) {
+  user.defaults.headers['Refreshtoken'] = sessionStorage.getItem('refreshToken') //axios header에 refresh-token 셋팅
+  await user.post(`/refresh`, userinfo).then(success).catch(fail)
 }
 
 async function logout(userid, success, fail) {

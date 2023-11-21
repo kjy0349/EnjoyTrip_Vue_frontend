@@ -6,12 +6,24 @@ const {
   VITE_VUE_API_URL_BOARD,
   VITE_VUE_API_URL_USER,
   VITE_VUE_API_URL_COMMENT,
-  VITE_VUE_API_URL_INFO
+  VITE_VUE_API_URL_INFO,
+  VITE_VUE_API_URL_TBOARD,
+  VITE_VUE_API_URL_TCOMMENT
 } = import.meta.env
 
 function localAxios() {
   const instance = axios.create({
     baseURL: VITE_VUE_API_URL,
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8'
+    }
+  })
+  return instance
+}
+
+function tboardAxios() {
+  const instance = axios.create({
+    baseURL: VITE_VUE_API_URL_TBOARD,
     headers: {
       'Content-Type': 'application/json;charset=utf-8'
     }
@@ -35,6 +47,7 @@ function userAxios() {
   })
   // Request 발생 시 적용할 내용.
   instance.defaults.headers.common['Authorization'] = ''
+  instance.defaults.headers.common['Refreshtoken'] = ''
   instance.defaults.headers.post['Content-Type'] = 'application/json'
   instance.defaults.headers.put['Content-Type'] = 'application/json'
 
@@ -116,5 +129,14 @@ function infoAxios() {
   })
   return instance
 }
+function tcommentAxios() {
+  const instance = axios.create({
+    baseURL: VITE_VUE_API_URL_TCOMMENT,
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8'
+    }
+  })
+  return instance
+}
 
-export { localAxios, boardAxios, userAxios, commentAxios, infoAxios }
+export { localAxios, boardAxios, userAxios, commentAxios, tboardAxios, tcommentAxios, infoAxios }

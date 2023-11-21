@@ -26,7 +26,7 @@ const { isLogin, userInfo } = storeToRefs(store)
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <router-link :to="{ name: 'board' }" class="text-decoration-none text-black nav-link"
+              <router-link :to="{ name: 'tboard' }" class="text-decoration-none text-black nav-link"
                 >동행 구하기</router-link
               >
             </li>
