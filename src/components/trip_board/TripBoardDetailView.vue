@@ -164,7 +164,12 @@ function onCreateComment() {
             <div class="clearfix align-content-center">
               <img class="avatar me-2 float-md-start bg-light p-2 image" :src="articleImg" />
               <p>
-                <span class="fw-bold">{{ article.userId }}</span> <br />
+                <span class="fw-bold">
+                  <img src="@/assets/img/male.png" style="width: 1rem; height: 1rem" />
+                  <img src="@/assets/img/female.png" style="width: 1rem; height: 1rem" />
+                  {{ article.userId }}
+                </span>
+                <br />
                 <span class="text-secondary fw-light">
                   {{ article.registerTime }} 조회 : {{ article.hit }}
                 </span>
@@ -186,7 +191,7 @@ function onCreateComment() {
                 v-for="comment in comments"
                 :key="comment.commentNo"
                 :comment="comment"
-                :userId="article.userId"
+                :userId="article"
               />
               <div class="card shadow-0 border" style="background-color: #f0f2f5">
                 <div class="card-body p-4">

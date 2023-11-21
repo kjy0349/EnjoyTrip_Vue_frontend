@@ -212,7 +212,7 @@ const moveTripPlan = () => {
       <!-- 관광지 검색 end -->
     </div>
     <div class="col-md-3">
-      <p style="text-align: center; font-size: large" class="m-2">여행지 리스트</p>
+      <p style="text-align: center; font-size: large" class="m-3">여행지 리스트</p>
       <table class="table table-striped">
         <!-- v-model로 양방향 바인딩, tag에 어떤 html요소로 작동할지 -->
         <!-- template안에 #item태그를 달고 그안에 요소는 element로받는다( 다른 이름 안돼) -->
