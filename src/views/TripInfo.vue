@@ -212,6 +212,7 @@ const moveTripPlan = () => {
       <!-- 관광지 검색 end -->
     </div>
     <div class="col-md-3">
+      <p style="text-align: center; font-size: large" class="m-2">여행지 리스트</p>
       <table class="table table-striped">
         <!-- v-model로 양방향 바인딩, tag에 어떤 html요소로 작동할지 -->
         <!-- template안에 #item태그를 달고 그안에 요소는 element로받는다( 다른 이름 안돼) -->
@@ -225,6 +226,7 @@ const moveTripPlan = () => {
           tag="tbody"
           :group="{ name: 'place', pull: 'clone', put: false }"
           item-key="contentId"
+          style="display: block; height: 80vh; overflow: auto"
         >
           <template #item="{ element }">
             <tr>
@@ -248,11 +250,18 @@ const moveTripPlan = () => {
       <div class="row my-3">
         <div class="col-md-3"></div>
         <div class="col-md-6">
-          <p class="justify-text-center">여행경로추가</p>
+          <p class="justify-text-center" style="font-size: large">여행경로추가</p>
         </div>
         <div class="col-md-3"></div>
       </div>
-      <draggable v-model="plandata" tag="div" group="place" item-key="contentId" draggable="false">
+      <draggable
+        v-model="plandata"
+        tag="div"
+        group="place"
+        item-key="contentId"
+        draggable="false"
+        style="display: block; height: 80vh; overflow: auto"
+      >
         <template #item="{ element }">
           <div class="m-2">
             <img :src="element.firstImage" style="width: 120px; height: 120px" />
