@@ -80,6 +80,7 @@ const router = createRouter({
         {
           path: 'view/:articleno?/:userId',
           name: 'tboard-view',
+          beforeEnter: onlyAuthUser,
           component: () => import('@/components/trip_board/TripBoardDetailView.vue')
         },
         {

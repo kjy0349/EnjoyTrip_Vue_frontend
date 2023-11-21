@@ -10,7 +10,7 @@ const props = defineProps({
     <td class="text-center">
       <router-link
         :to="{
-          name: 'board-view',
+          name: 'tboard-view',
           params: { articleno: article.articleNo, userId: article.userId }
         }"
         class="article-title link-dark"

@@ -6,7 +6,8 @@ const {
   VITE_VUE_API_URL_BOARD,
   VITE_VUE_API_URL_USER,
   VITE_VUE_API_URL_COMMENT,
-  VITE_VUE_API_URL_TBOARD
+  VITE_VUE_API_URL_TBOARD,
+  VITE_VUE_API_URL_TCOMMENT
 } = import.meta.env
 
 function localAxios() {

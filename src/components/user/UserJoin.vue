@@ -7,6 +7,24 @@ const { VITE_VUE_API_URL_USER } = import.meta.env
 
 const route = useRoute()
 const router = useRouter()
+const mbti = ref([
+  'ISTJ',
+  'ISFJ',
+  'INFJ',
+  'INTJ',
+  'ISTP',
+  'ISFP',
+  'INFP',
+  'INTP',
+  'ESTP',
+  'ESFP',
+  'ENFP',
+  'ENTP',
+  'ESTJ',
+  'ESFJ',
+  'ENFJ',
+  'ENTJ'
+])
 
 const user = ref({
   userId: '',
@@ -14,7 +32,10 @@ const user = ref({
   userPass: '',
   emailId: '',
   emailDomain: '',
-  imgSrc: ''
+  imgSrc: '',
+  mbti: '',
+  gender: '',
+  age: 0
 })
 
 const onFileInfo = (event) => {
@@ -30,6 +51,9 @@ const onJoin = () => {
   formData.append('emailId', user.value.emailId)
   formData.append('emailDomain', user.value.emailDomain)
   formData.append('imgSrc', user.value.imgSrc)
+  formData.append('mbti', user.value.mbti)
+  formData.append('gender', user.value.gender)
+  formData.append('age', user.value.age)
 
   axios
     .post(VITE_VUE_API_URL_USER + '/join', formData, {
@@ -102,7 +126,25 @@ const moveHome = () => {
             />
           </div>
         </div>
-        <div id="result-view-pwd" class="mb-3"></div>
+        <div class="mb-3">
+          <select v-model="user.mbti" class="me-5">
+            <option disabled value="">MBTI를 선택하세요.</option>
+            <option v-for="(item, index) in mbti" :key="item.index" :value="item">
+              {{ item }}
+            </option>
+          </select>
+          <select v-model="user.gender">
+            <option disabled value="">성별을 선택하세요.</option>
+            <option value="남자">남자</option>
+            <option value="여자">여자</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <select v-model="user.age">
+            <option disabled value="">나이를 선택하세요.</option>
+            <option v-for="i in 100" :key="index" :value="i">{{ i }}</option>
+          </select>
+        </div>
         <div class="mb-3 d-flex email form-control">
           <input
             v-model="user.emailId"

@@ -5,9 +5,9 @@ import axios from 'axios'
 
 const { VITE_VUE_API_URL_USER } = import.meta.env
 const memberStore = useMemberStore()
-console.log(memberStore.userInfo.userId)
 
 const img = ref('')
+const userInfo = memberStore.userInfo
 
 onMounted(() => {
   loadImg()
@@ -15,7 +15,7 @@ onMounted(() => {
 
 const loadImg = () => {
   axios
-    .get(VITE_VUE_API_URL_USER + `/file/${memberStore.userInfo.userId}`, {
+    .get(VITE_VUE_API_URL_USER + `/file/${userInfo.userId}`, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -36,7 +36,7 @@ const loadImg = () => {
   <!-- <div class="card">
     <img :src="img" class="card-img-top" alt="..." />
     <div class="card-body">
-      <h5 class="card-title">{{ memberStore.userInfo.userId }}</h5>
+      <h5 class="card-title">{{ userInfo.userId }}</h5>
       <p class="card-text">
         Some quick example text to build on the card title and make up the bulk of the card's
         content.
@@ -59,12 +59,13 @@ const loadImg = () => {
         <div class="card">
           <img :src="img" class="card-img-top" alt="User Profile" />
           <div class="card-body">
-            <h5 class="card-title">{{ memberStore.userInfo.userName }}</h5>
+            <h5 class="card-title">{{ userInfo.userName }}</h5>
             <p class="card-text">
-              <strong>ID:</strong> {{ memberStore.userInfo.userId }}<br />
-              <strong>Email:</strong> {{ memberStore.userInfo.emailId }}@{{
-                memberStore.userInfo.emailDomain
-              }}
+              <strong>ID:</strong> {{ userInfo.userId }}<br />
+              <strong>Email:</strong> {{ userInfo.emailId }}@{{ userInfo.emailDomain }} <br />
+              <strong>MBTI:</strong> {{ userInfo.mbti }}<br />
+              <strong>성별:</strong> {{ userInfo.gender }}<br />
+              <strong>나이:</strong> {{ userInfo.age }}<br />
             </p>
           </div>
         </div>

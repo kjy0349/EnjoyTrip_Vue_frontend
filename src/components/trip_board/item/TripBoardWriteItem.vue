@@ -1,7 +1,7 @@
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { writeArticle, detailArticle, modifyArticle } from '../../../api/board'
+import { writeArticle, detailArticle, modifyArticle, getTripRoutes } from '@/api/tboard'
 import { useMemberStore } from '@/api/member'
 import { storeToRefs } from 'pinia'
 const memberStore = useMemberStore()
@@ -22,6 +22,17 @@ const article = ref({
   hit: 0,
   registerTime: ''
 })
+const tripRoute = ref()
+
+onMounted(() => {
+  tripRouteList(userInfo.userId)
+})
+
+const tripRouteList = async (userId) => {
+  await getTripRoutes(userId, ({ data }) => {
+    tripRoute.value = data.data
+  })
+}
 
 // 전달 받은 type이 글 수정(modify)라면 글 수정
 if (props.type === 'modify') {
@@ -131,13 +142,16 @@ function moveList() {
     </div>
     <div class="mb-3">
       <label for="subject" class="form-label">여행경로 : &nbsp</label>
-      <select>
-        <option v-for="(item, index) in items" :key="index">{{ item. }}</option>
+      <select v-model="article.planId">
+        <option disabled value="">여행계획을 선택하세요.</option>
+        <option v-for="(item, index) in tripRoute" :key="item.planId" :value="item.planId">
+          {{ item.title }}
+        </option>
       </select>
     </div>
     <div class="mb-3">
       <label for="subject" class="form-label">예상 경비 : </label>
-      <input type="text" class="form-control" v-model="article.subject" placeholder="제목..." />
+      <input type="number" class="form-control" v-model="article.cost" placeholder="예상 경비.." />
     </div>
     <div class="mb-3">
       <label for="content" class="form-label">내용 : </label>

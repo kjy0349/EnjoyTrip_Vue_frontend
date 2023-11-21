@@ -3,7 +3,7 @@ import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
 import { useMemberStore } from '@/api/member'
-import { deleteComment } from '@/api/tcomment'
+import { deleteComment, updateSelectedStatus } from '@/api/tcomment'
 
 const router = useRouter()
 const memberStore = useMemberStore()
@@ -11,7 +11,8 @@ const memberStore = useMemberStore()
 const { VITE_VUE_API_URL_USER } = import.meta.env
 
 const props = defineProps({
-  comment: Object
+  comment: Object,
+  userId: String
 })
 
 const userInfo = ref(memberStore.userInfo)
@@ -90,9 +91,21 @@ const onCommentDelete = () => {
           <p class="small mb-0 ms-2">{{ comment.userId }}</p>
         </div>
         <div class="d-flex flex-row align-items-center">
-          <p class="small text-muted mb-0">Upvote?</p>
+          <button
+            class="btn btn-sm"
+            v-show="userInfo.userId == userId"
+            :class="{ 'btn-secondary ': !comment.chosen, 'btn-success': comment.chosen }"
+            @click="
+              () => {
+                comment.chosen = !comment.chosen
+                updateSelectedStatus(comment.commentNo)
+              }
+            "
+          >
+            <div v-if="comment.chosen">선택됨</div>
+            <div v-if="!comment.chosen">선택하기</div>
+          </button>
           <i class="far fa-thumbs-up mx-2 fa-xs text-black" style="margin-top: -0.16rem"></i>
-          <p class="small text-muted mb-0">3</p>
         </div>
       </div>
     </div>

@@ -1,9 +1,9 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { detailArticle, deleteArticle } from '@/api/board'
+import { detailArticle, deleteArticle } from '@/api/tboard'
 import { writeComment, getComments, deleteComment } from '@/api/tcomment'
-import CommentItem from './comment/TripCommentItem.vue'
+import TripCommentItem from './comment/TripCommentItem.vue'
 import { useMemberStore } from '@/api/member'
 import axios from 'axios'
 
@@ -174,6 +174,7 @@ function onCreateComment() {
           <div class="col-md-4 align-self-center text-end">댓글 : {{ comments.length }}</div>
           <div class="divider mb-3"></div>
           <div class="text-secondary">
+            {{ article.planId }}번째 여행계획 선택됨 <br />
             {{ article.content }}
           </div>
           <div class="divider mt-3 mb-3"></div>
@@ -181,10 +182,11 @@ function onCreateComment() {
           <div class="row d-flex justify-content-center">
             <!-- <div class="col-md-8 col-lg-6"> -->
             <div>
-              <CommentItem
+              <TripCommentItem
                 v-for="comment in comments"
                 :key="comment.commentNo"
                 :comment="comment"
+                :userId="memberStore.userInfo.userId"
               />
               <div class="card shadow-0 border" style="background-color: #f0f2f5">
                 <div class="card-body p-4">
