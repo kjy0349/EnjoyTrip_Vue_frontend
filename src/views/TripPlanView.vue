@@ -19,7 +19,9 @@ const startDate = ref()
 const endDate = ref()
 const dateCalFlag = ref(false)
 
-const planPlaces = ref([])
+// const planPlaces = ref([])
+
+const planPlaces = ref(new Map())
 
 const diffDateFun = computed(() => {
   const diffSec = new Date(endDate.value).getTime() - new Date(startDate.value).getTime()
@@ -30,9 +32,10 @@ const diffDateFun = computed(() => {
 const setFlag = () => {
   dateCalFlag.value = true
 }
+
 const appendPlace = (place) => {
-  if (planPlaces.value.length < diffDateFun.value) {
-    planPlaces.value.push(place)
+  if (planPlaces.value.size < diffDateFun.value) {
+    planPlaces.value.set(planPlaces.value.size, place)
   } else {
     alert('더는 못 넣어 이놈아..!!')
   }
@@ -44,7 +47,7 @@ const goMain = () => {
 
 const insertTime = () => {
   let i = 0
-  planPlaces.value.forEach((place) => {
+  planPlaces.value.forEach((place, key) => {
     // place는 다 잘 나와
     const temp = new Date(startDate.value)
     const routeDetail = {
@@ -74,6 +77,7 @@ const makeTripPlan = () => {
       console.log('실패')
     }
   )
+  goMain()
 }
 
 const tripRoute = ref({
@@ -82,6 +86,10 @@ const tripRoute = ref({
 })
 
 const routeDetailList = ref([])
+
+const reset = () => {
+  planPlaces.value.clear()
+}
 
 // Computed나 watch로 값 변경될때마다 바꿔
 // const dateA = new Date('2022/06/01');
@@ -95,27 +103,29 @@ const routeDetailList = ref([])
   <div class="container">
     <div class="row">
       <div class="col-4"></div>
-      <div class="col-4">
+      <div class="col-4 mt-5">
         <h1>나만의 경로 만들기</h1>
       </div>
     </div>
     <div class="row">
-      <div class="col-2">시작일</div>
       <div class="col-2">
+        시작일
         <input type="date" v-model="startDate" />
       </div>
-      <div class="col-2">종료일</div>
       <div class="col-2">
+        종료일
         <input type="date" v-model="endDate" @change="setFlag" />
       </div>
-      <div class="col-4" style="display: inline-block">
+      <div class="col-4"></div>
+      <div class="col-4 d-flex justify-content-center" style="display: inline-block">
         <span>총 일수 : </span>
         <span v-if="dateCalFlag">{{ diffDateFun }}</span>
         <span v-else>0</span>
       </div>
     </div>
-    <div class="row mt-5">
+    <div class="row mt-5 shadow p-3 bg-body-tertiary rounded">
       <TripItem
+        class="col-2"
         v-for="place in plan"
         :key="place.contentId"
         :place="place"
@@ -123,12 +133,22 @@ const routeDetailList = ref([])
       ></TripItem>
     </div>
     <div class="row mt-5" v-if="dateCalFlag">
-      <div class="col-3" v-for="i in diffDateFun" :key="i">
+      <div class="col-2 shadow p-3 bg-body-tertiary rounded" v-for="i in diffDateFun" :key="i">
         <div>{{ i }} 일차</div>
+        <div style="height: 150px">
+          <TripItem v-if="planPlaces.get(i - 1)" :place="planPlaces.get(i - 1)"></TripItem>
+        </div>
       </div>
     </div>
-    <div class="row mt-5" v-if="dateCalFlag">
-      <TripItem v-for="place in planPlaces" :key="place.contentId" :place="place"></TripItem>
+    <div class="row">
+      <div class="col d-flex justify-content-end my-3">
+        <button class="btn btn-warning" @click="reset">초기화</button>
+      </div>
+    </div>
+
+    <div class="input-group mt-3">
+      <span class="input-group-text">여행 경로 이름</span>
+      <input class="form-control" aria-label="With textarea" v-model="tripRoute.title" />
     </div>
     <div class="row mt-5">
       <div class="col-4"></div>
@@ -144,10 +164,7 @@ const routeDetailList = ref([])
       </div>
       <div class="col-4"></div>
     </div>
-    <div class="input-group mt-3">
-      <span class="input-group-text">여행 경로 이름</span>
-      <input class="form-control" aria-label="With textarea" v-model="tripRoute.title" />
-    </div>
+
     <!-- <draggable
         v-model="plan"
         :group="{ name: 'place', pull: 'clone', put: false }"
