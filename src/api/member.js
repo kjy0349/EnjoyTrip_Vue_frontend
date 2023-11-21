@@ -67,6 +67,7 @@ export const useMemberStore = defineStore(
             error.response.status
           )
           isValidToken.value = false
+          isLogin.value = false
           await tokenRegenerate()
         }
       )

@@ -223,7 +223,6 @@ const moveTripPlan = () => {
         <draggable
           v-model="tripdata"
           tag="tbody"
-          :options="dragOptions"
           :group="{ name: 'place', pull: 'clone', put: false }"
           item-key="contentId"
         >
@@ -253,14 +252,7 @@ const moveTripPlan = () => {
         </div>
         <div class="col-md-3"></div>
       </div>
-      <draggable
-        v-model="plandata"
-        tag="div"
-        :options="dragOptions"
-        group="place"
-        item-key="contentId"
-        draggable="false"
-      >
+      <draggable v-model="plandata" tag="div" group="place" item-key="contentId" draggable="false">
         <template #item="{ element }">
           <div class="m-2">
             <img :src="element.firstImage" style="width: 120px; height: 120px" />
