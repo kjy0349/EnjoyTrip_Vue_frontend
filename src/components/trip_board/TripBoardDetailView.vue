@@ -186,7 +186,7 @@ function onCreateComment() {
                 v-for="comment in comments"
                 :key="comment.commentNo"
                 :comment="comment"
-                :userId="memberStore.userInfo.userId"
+                :userId="article.userId"
               />
               <div class="card shadow-0 border" style="background-color: #f0f2f5">
                 <div class="card-body p-4">
