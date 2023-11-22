@@ -130,6 +130,19 @@ const router = createRouter({
       path: '/trip-plan',
       name: 'trip-plan',
       component: () => import('@/views/TripPlanView.vue')
+    },
+    {
+      path: '/my-plan',
+      name: 'myplan',
+      component: () => import('@/views/MyPlanView.vue'),
+      redirect: { name: 'planinfo' },
+      children: [
+        {
+          path: '/plan-info',
+          name: 'planinfo',
+          component: () => import('@/components/user/MyPlan.vue')
+        }
+      ]
     }
   ]
 })
