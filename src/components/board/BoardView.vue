@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { detailArticle, deleteArticle } from '@/api/board'
 import { writeComment, getComments, deleteComment } from '@/api/comment'
+import { getArticleUserInfo } from '@/api/tboard'
 import CommentItem from './comment/CommentItem.vue'
 import { useMemberStore } from '@/api/member'
 import axios from 'axios'
@@ -17,6 +18,8 @@ const router = useRouter()
 const { articleno, userId } = route.params
 
 const article = ref({})
+const articleUserInfo = ref({})
+
 const comments = ref([])
 const writeCommentObj = ref({
   userId: '',
@@ -48,6 +51,7 @@ const getSession = () => {
 const getArticle = () => {
   detailArticle(articleno, ({ data }) => {
     article.value = data.data
+    getArticleUserInfoFun()
   })
 }
 
@@ -89,6 +93,10 @@ function moveModify() {
   router.push({ name: 'board-modify', params: { articleno } })
 }
 
+const moveUserDetail = (userId) => {
+  router.push({ name: 'user-detail', params: { userId } })
+}
+
 function onDeleteArticle() {
   // const { articleno } = route.params;
   console.log(articleno + '번글 삭제하러 가자!!!')
@@ -112,6 +120,20 @@ const getCommentList = () => {
     ({ data }) => {
       comments.value = data.data
       console.log('댓글 개수')
+    },
+    (error) => {
+      console.log(error)
+    }
+  )
+}
+
+const getArticleUserInfoFun = () => {
+  console.log('1 글쓴이 정보 가져와')
+  getArticleUserInfo(
+    article.value.userId,
+    ({ data }) => {
+      articleUserInfo.value = data.data
+      console.log(articleUserInfo.value)
     },
     (error) => {
       console.log(error)
@@ -162,9 +184,38 @@ function onCreateComment() {
         <div class="row">
           <div class="col-md-8">
             <div class="clearfix align-content-center">
-              <img class="avatar me-2 float-md-start bg-light p-2 image" :src="articleImg" />
+              <img
+                class="avatar me-2 float-md-start bg-light p-2 image"
+                :src="articleImg"
+                @click="moveUserDetail(article.userId)"
+              />
               <p>
-                <span class="fw-bold">{{ article.userId }}</span> <br />
+                <span class="fw-bold">
+                  <img
+                    v-if="articleUserInfo.gender == '남자'"
+                    src="@/assets/img/male.png"
+                    style="width: 1rem; height: 1rem"
+                  />
+                  <img v-else src="@/assets/img/female.png" style="width: 1rem; height: 1rem" />
+                  <div class="dropdown">
+                    <span
+                      type="button"
+                      class="dropdown-toggle"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                      >{{ article.userId }}</span
+                    >
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                      <li>
+                        <a class="dropdown-item" @click="moveUserDetail(article.userId)"
+                          >프로필 보기</a
+                        >
+                      </li>
+                      <li><a class="dropdown-item">유저의 계획 보기</a></li>
+                    </ul>
+                  </div>
+                </span>
+                <br />
                 <span class="text-secondary fw-light">
                   {{ article.registerTime }} 조회 : {{ article.hit }}
                 </span>
@@ -185,6 +236,7 @@ function onCreateComment() {
                 v-for="comment in comments"
                 :key="comment.commentNo"
                 :comment="comment"
+                :userId="article.userId"
               />
               <div class="card shadow-0 border" style="background-color: #f0f2f5">
                 <div class="card-body p-4">

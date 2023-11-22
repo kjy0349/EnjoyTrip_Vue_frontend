@@ -71,10 +71,12 @@ const makeTripPlan = () => {
     tripRoute.value,
     routeDetailList.value,
     () => {
+      alert('계획 등록 성공!')
       console.log('plan 등록 성공')
       goMain()
     },
     (error) => {
+      alert('여행 경로 이름을 다시 지어주세요')
       console.log('실패')
     }
   )

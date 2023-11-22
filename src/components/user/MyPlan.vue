@@ -9,6 +9,7 @@ const ownTripLists = ref()
 onMounted(() => {
   getMyTripInfos(userInfo.userId, ({ data }) => {
     ownTripLists.value = data.data
+    console.log(ownTripLists.value)
     ownTripLists.value.forEach((response) => {
       getTripRouteDetails(response.planId, ({ data }) => {
         console.log(data.data)

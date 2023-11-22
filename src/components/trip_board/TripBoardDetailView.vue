@@ -195,7 +195,23 @@ const moveUserDetail = (userId) => {
                     style="width: 1rem; height: 1rem"
                   />
                   <img v-else src="@/assets/img/female.png" style="width: 1rem; height: 1rem" />
-                  {{ article.userId }}
+                  <div class="dropdown">
+                    <span
+                      type="button"
+                      class="dropdown-toggle"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                      >{{ article.userId }}</span
+                    >
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                      <li>
+                        <a class="dropdown-item" @click="moveUserDetail(article.userId)"
+                          >프로필 보기</a
+                        >
+                      </li>
+                      <li><a class="dropdown-item">유저의 계획 보기</a></li>
+                    </ul>
+                  </div>
                 </span>
                 <br />
                 <span class="text-secondary fw-light">
