@@ -72,12 +72,12 @@ const makeTripPlan = () => {
     routeDetailList.value,
     () => {
       console.log('plan 등록 성공')
+      goMain()
     },
     (error) => {
       console.log('실패')
     }
   )
-  goMain()
 }
 
 const tripRoute = ref({
