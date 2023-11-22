@@ -250,18 +250,6 @@ const moveUserDetail = (userId) => {
               />
               <div class="card shadow-0 border" style="background-color: #f0f2f5">
                 <div class="card-body p-4">
-                  <!-- <div class="form-outline mb-4">
-                    <input
-                      type="text"
-                      id="addANote"
-                      class="form-control"
-                      placeholder="댓글"
-                      v-model="writeCommentObj.content"
-                      @keyup.enter="onCreateComment"
-                      style="display: inline-block"
-                    />
-                    <button type="button" class="btn btn-primary btn-sm">댓글 작성</button>
-                  </div> -->
                   <div class="card-footer py-3 border-0" style="background-color: #f8f9fa">
                     <div class="d-flex flex-start w-100">
                       <img

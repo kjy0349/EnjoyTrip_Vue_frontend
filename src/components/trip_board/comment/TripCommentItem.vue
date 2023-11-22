@@ -100,8 +100,9 @@ const moveUserDetail = (userId) => {
           <img
             :src="img"
             alt="avatar"
-            width="25"
-            height="25"
+            class="rounded-circle shadow-1-strong"
+            width="40"
+            height="40"
             @click="moveUserDetail(comment.userId)"
           />
           <img
