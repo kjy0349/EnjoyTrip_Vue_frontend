@@ -37,11 +37,15 @@ function getTripRoutes(userId, success, fail) {
   tboard.get(`/route/${userId}`).then(success).catch(fail)
 }
 
-function getTripRouteDetails(planId, success, fail) {
-  tboard.get(`/plan/${planId}`).then(success).catch(fail)
+async function getTripRouteDetails(planId, success, fail) {
+  await tboard.get(`/plan/${planId}`).then(success).catch(fail)
 }
 function getArticleUserInfo(userId, success, fail) {
   tboard.get(`/userinfo/${userId}`).then(success).catch(fail)
+}
+
+async function getTripArticlesById(userId, success, fail) {
+  await tboard.get(`/list/Id/${userId}`).then(success).catch(fail)
 }
 
 export {
@@ -54,5 +58,6 @@ export {
   getTripRoutes,
   searchArticleBySubject,
   getTripRouteDetails,
-  getArticleUserInfo
+  getArticleUserInfo,
+  getTripArticlesById
 }
