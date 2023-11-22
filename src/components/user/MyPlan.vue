@@ -5,8 +5,8 @@ import { getMyTripInfos } from '@/api/user'
 import { detailArticle, getTripRouteDetails, getTripArticlesById } from '@/api/tboard'
 const store = useMemberStore()
 const userInfo = store.userInfo
-const pickedTripLists = ref()
-const myTripLists = ref()
+const pickedTripLists = ref([])
+const myTripLists = ref([])
 onMounted(async () => {
   await getMyTripInfos(userInfo.userId, ({ data }) => {
     pickedTripLists.value = data.data
@@ -32,7 +32,12 @@ onMounted(async () => {
 
 <template>
   <div class="row">
-    <p style="text-align: start; font-size: larger">내가 작성한 여행 계획들</p>
+    <p style="text-align: start; font-size: larger" v-if="myTripLists.length > 0">
+      내가 작성한 여행 계획들
+    </p>
+    <p style="text-align: start; font-size: larger" v-else>
+      내가 작성한 여행 계획이 존재하지 않습니다.
+    </p>
     <div class="row">
       <div
         class="card col"
@@ -58,7 +63,12 @@ onMounted(async () => {
         </div>
       </div>
     </div>
-    <p style="text-align: start; font-size: larger">내가 뽑힌 여행 계획들</p>
+    <p style="text-align: start; font-size: larger" v-if="pickedTripLists.length > 0">
+      내가 뽑힌 여행 계획들
+    </p>
+    <p style="text-align: start; font-size: larger" v-else>
+      내가 뽑힌 여행 계획이 존재하지 않습니다.
+    </p>
     <div class="row">
       <div
         class="card col"
