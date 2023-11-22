@@ -2,20 +2,28 @@
 import { onMounted, ref } from 'vue'
 import { useMemberStore } from '@/api/member'
 import { getMyTripInfos } from '@/api/user'
-import { detailArticle, getTripRouteDetails, getArticleUserInfo } from '@/api/tboard'
+import { detailArticle, getTripRouteDetails, getTripArticlesById } from '@/api/tboard'
 const store = useMemberStore()
 const userInfo = store.userInfo
-const ownTripLists = ref()
-onMounted(() => {
-  getMyTripInfos(userInfo.userId, ({ data }) => {
-    ownTripLists.value = data.data
-    ownTripLists.value.forEach((response) => {
-      getTripRouteDetails(response.planId, ({ data }) => {
-        console.log(data.data)
-      })
-    })
-    // ownTripLists.value += getTripRouteDetails(value.planId)
+const pickedTripLists = ref()
+const myTripLists = ref()
+onMounted(async () => {
+  await getMyTripInfos(userInfo.userId, ({ data }) => {
+    pickedTripLists.value = data.data
   })
+  for (let article of pickedTripLists.value) {
+    getTripRouteDetails(article.planId, ({ data }) => {
+      article.image = data.data[0].firstImage
+    })
+  }
+  await getTripArticlesById(userInfo.userId, ({ data }) => {
+    myTripLists.value = data.data
+  })
+  for (let article of myTripLists.value) {
+    getTripRouteDetails(article.planId, ({ data }) => {
+      article.image = data.data[0].firstImage
+    })
+  }
 })
 // getTripRouteDetails(article.value.planId, ({ data }) => {
 //   routeDetails.value = data.data
@@ -24,27 +32,56 @@ onMounted(() => {
 
 <template>
   <div class="row">
-    <div
-      class="card col"
-      style="width: 18rem"
-      v-for="(article, index) in ownTripLists"
-      :key="article.articleNo"
-    >
-      <img class="card-img-top" src="..." alt="Card image cap" />
-      <div class="card-body">
-        <h5 class="card-title">게시글 제목 : {{ article.subject }}</h5>
-        <p class="card-text overflow-hidden">
-          {{ article.content }}
-        </p>
-        <p class="card-text">예상 경비 : {{ article.cost }}</p>
-        <router-link
-          :to="{
-            name: 'tboard-view',
-            params: { articleno: article.articleNo, userId: article.userId }
-          }"
-          class="btn btn-primary"
-          >게시글로 이동하기</router-link
-        >
+    <p style="text-align: start; font-size: larger">내가 작성한 여행 계획들</p>
+    <div class="row">
+      <div
+        class="card col"
+        style="width: 18rem"
+        v-for="(article, index) in myTripLists"
+        :key="article.articleNo"
+      >
+        <img class="card-img-top" :src="article.image" alt="Card image cap" />
+        <div class="card-body">
+          <h5 class="card-title">게시글 제목 : {{ article.subject }}</h5>
+          <p class="card-text overflow-hidden">
+            {{ article.content }}
+          </p>
+          <p class="card-text">예상 경비 : {{ article.cost }}</p>
+          <router-link
+            :to="{
+              name: 'tboard-view',
+              params: { articleno: article.articleNo, userId: article.userId }
+            }"
+            class="btn btn-primary"
+            >게시글로 이동하기</router-link
+          >
+        </div>
+      </div>
+    </div>
+    <p style="text-align: start; font-size: larger">내가 뽑힌 여행 계획들</p>
+    <div class="row">
+      <div
+        class="card col"
+        style="width: 18rem"
+        v-for="(article, index) in pickedTripLists"
+        :key="article.articleNo"
+      >
+        <img class="card-img-top" :src="article.image" alt="Card image cap" />
+        <div class="card-body">
+          <h5 class="card-title">게시글 제목 : {{ article.subject }}</h5>
+          <p class="card-text overflow-hidden">
+            {{ article.content }}
+          </p>
+          <p class="card-text">예상 경비 : {{ article.cost }}</p>
+          <router-link
+            :to="{
+              name: 'tboard-view',
+              params: { articleno: article.articleNo, userId: article.userId }
+            }"
+            class="btn btn-primary"
+            >게시글로 이동하기</router-link
+          >
+        </div>
       </div>
     </div>
   </div>
