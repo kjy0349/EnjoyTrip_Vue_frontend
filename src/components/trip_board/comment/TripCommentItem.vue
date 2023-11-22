@@ -54,6 +54,9 @@ const onCommentDelete = () => {
     }
   )
 }
+const moveUserDetail = (userId) => {
+  router.push({ name: 'user-detail', params: { userId } })
+}
 </script>
 
 <template>
@@ -87,7 +90,13 @@ const onCommentDelete = () => {
 
       <div class="d-flex justify-content-between">
         <div class="d-flex flex-row align-items-center">
-          <img :src="img" alt="avatar" width="25" height="25" />
+          <img
+            :src="img"
+            alt="avatar"
+            width="25"
+            height="25"
+            @click="moveUserDetail(comment.userId)"
+          />
           <p class="small mb-0 ms-2">{{ comment.userId }}</p>
         </div>
         <div class="d-flex flex-row align-items-center">

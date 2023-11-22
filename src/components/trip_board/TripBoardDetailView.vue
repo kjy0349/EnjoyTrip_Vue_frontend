@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { detailArticle, deleteArticle, getTripRouteDetails } from '@/api/tboard'
+import { detailArticle, deleteArticle, getTripRouteDetails, getArticleUserInfo } from '@/api/tboard'
 import { writeComment, getComments, deleteComment } from '@/api/tcomment'
 import TripCommentItem from './comment/TripCommentItem.vue'
 import { useMemberStore } from '@/api/member'
@@ -17,6 +17,7 @@ const router = useRouter()
 const { articleno, userId } = route.params
 
 const article = ref({})
+const articleUserInfo = ref({})
 const comments = ref([])
 const writeCommentObj = ref({
   userId: '',
@@ -38,6 +39,8 @@ onMounted(async () => {
     article.value = data.data
     getTripRouteDetails(article.value.planId, ({ data }) => {
       routeDetails.value = data.data
+      console.log(routeDetails)
+      getArticleUserInfoFun()
     })
   })
 })
@@ -51,7 +54,19 @@ const getSession = () => {
   }
 }
 
-const getArticle = async () => {}
+const getArticleUserInfoFun = () => {
+  console.log('1 글쓴이 정보 가져와')
+  getArticleUserInfo(
+    article.value.userId,
+    ({ data }) => {
+      articleUserInfo.value = data.data
+      console.log(articleUserInfo.value)
+    },
+    (error) => {
+      console.log(error)
+    }
+  )
+}
 
 const loadArticleImg = () => {
   axios
@@ -82,13 +97,6 @@ const loadSessionUserImg = () => {
     .catch((error) => {
       console.log('에러')
     })
-}
-
-const moveList = () => {
-  router.push({ name: 'board' })
-}
-function moveModify() {
-  router.push({ name: 'board-modify', params: { articleno } })
 }
 
 function onDeleteArticle() {
@@ -144,6 +152,17 @@ function onCreateComment() {
     // router.go()
   }
 }
+
+const moveList = () => {
+  router.push({ name: 'board' })
+}
+function moveModify() {
+  router.push({ name: 'board-modify', params: { articleno } })
+}
+
+const moveUserDetail = (userId) => {
+  router.push({ name: 'user-detail', params: { userId } })
+}
 </script>
 
 <template>
@@ -163,11 +182,19 @@ function onCreateComment() {
         <div class="row">
           <div class="col-md-8">
             <div class="clearfix align-content-center">
-              <img class="avatar me-2 float-md-start bg-light p-2 image" :src="articleImg" />
+              <img
+                class="avatar me-2 float-md-start bg-light p-2 image"
+                :src="articleImg"
+                @click="moveUserDetail(article.userId)"
+              />
               <p>
                 <span class="fw-bold">
-                  <img src="@/assets/img/male.png" style="width: 1rem; height: 1rem" />
-                  <img src="@/assets/img/female.png" style="width: 1rem; height: 1rem" />
+                  <img
+                    v-if="articleUserInfo.gender == '남자'"
+                    src="@/assets/img/male.png"
+                    style="width: 1rem; height: 1rem"
+                  />
+                  <img v-else src="@/assets/img/female.png" style="width: 1rem; height: 1rem" />
                   {{ article.userId }}
                 </span>
                 <br />
@@ -181,8 +208,8 @@ function onCreateComment() {
           <div class="divider mb-3"></div>
           <div class="row">
             <p style="text-align: center">
-              {{ routeDetails[0].placeDate }} ~
-              {{ routeDetails[routeDetails.length - 1].placeDate }}
+              <!-- {{ routeDetails[0].placeDate }} ~
+              {{ routeDetails[routeDetails.length - 1].placeDate }} -->
             </p>
             <div class="col" v-for="(plan, index) in routeDetails" :key="plan.contentId">
               <img :src="plan.firstImage" style="width: 20vh; height: 15vh" />

@@ -40,6 +40,9 @@ function getTripRoutes(userId, success, fail) {
 function getTripRouteDetails(planId, success, fail) {
   tboard.get(`/plan/${planId}`).then(success).catch(fail)
 }
+function getArticleUserInfo(userId, success, fail) {
+  tboard.get(`/userinfo/${userId}`).then(success).catch(fail)
+}
 
 export {
   listArticle,
@@ -50,5 +53,6 @@ export {
   deleteArticle,
   getTripRoutes,
   searchArticleBySubject,
-  getTripRouteDetails
+  getTripRouteDetails,
+  getArticleUserInfo
 }
