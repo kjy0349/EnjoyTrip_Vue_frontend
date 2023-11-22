@@ -33,7 +33,12 @@ function deleteArticle(articleno, success, fail) {
 }
 
 function getTripRoutes(userId, success, fail) {
-  tboard.get(`route/${userId}`).then(success).catch(fail)
+  tboard.get(`/route/${userId}`).then(success).catch(fail)
+}
+
+function getArticleUserInfo(userId, success, fail) {
+  console.log('2 userId : ' + userId)
+  tboard.get(`/userinfo/${userId}`).then(success).catch(fail)
 }
 
 export {
@@ -44,5 +49,6 @@ export {
   modifyArticle,
   deleteArticle,
   getTripRoutes,
-  searchArticleBySubject
+  searchArticleBySubject,
+  getArticleUserInfo
 }

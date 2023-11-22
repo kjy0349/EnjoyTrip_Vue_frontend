@@ -118,6 +118,11 @@ const router = createRouter({
           name: 'user-info',
           beforeEnter: onlyAuthUser,
           component: () => import('@/components/user/UserInfo.vue')
+        },
+        {
+          path: 'f-info/:userId',
+          name: 'user-detail',
+          component: () => import('@/components/trip_board/item/TripUserDetailItem.vue')
         }
       ]
     },
