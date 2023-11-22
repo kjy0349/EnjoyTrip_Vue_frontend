@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { detailArticle, deleteArticle } from '@/api/tboard'
+import { detailArticle, deleteArticle, getTripRouteDetails } from '@/api/tboard'
 import { writeComment, getComments, deleteComment } from '@/api/tcomment'
 import TripCommentItem from './comment/TripCommentItem.vue'
 import { useMemberStore } from '@/api/member'
@@ -28,12 +28,18 @@ const sessionUserId = ref('')
 
 const articleImg = ref('')
 const sessionUserImg = ref('')
+const routeDetails = ref([])
 
 onMounted(async () => {
-  await getArticle()
-  await getSession()
-  await loadArticleImg()
-  await getCommentList()
+  getSession()
+  loadArticleImg()
+  getCommentList()
+  await detailArticle(articleno, ({ data }) => {
+    article.value = data.data
+    getTripRouteDetails(article.value.planId, ({ data }) => {
+      routeDetails.value = data.data
+    })
+  })
 })
 
 const getSession = () => {
@@ -45,11 +51,7 @@ const getSession = () => {
   }
 }
 
-const getArticle = () => {
-  detailArticle(articleno, ({ data }) => {
-    article.value = data.data
-  })
-}
+const getArticle = async () => {}
 
 const loadArticleImg = () => {
   axios
@@ -111,7 +113,6 @@ const getCommentList = () => {
     articleno,
     ({ data }) => {
       comments.value = data.data
-      console.log('댓글 개수')
     },
     (error) => {
       console.log(error)
@@ -178,8 +179,17 @@ function onCreateComment() {
           </div>
           <div class="col-md-4 align-self-center text-end">댓글 : {{ comments.length }}</div>
           <div class="divider mb-3"></div>
+          <div class="row">
+            <p style="text-align: center">
+              {{ routeDetails[0].placeDate }} ~
+              {{ routeDetails[routeDetails.length - 1].placeDate }}
+            </p>
+            <div class="col" v-for="(plan, index) in routeDetails" :key="plan.contentId">
+              <img :src="plan.firstImage" style="width: 20vh; height: 15vh" />
+              <p>{{ index + 1 }}일차</p>
+            </div>
+          </div>
           <div class="text-secondary">
-            {{ article.planId }}번째 여행계획 선택됨 <br />
             {{ article.content }}
           </div>
           <div class="divider mt-3 mb-3"></div>

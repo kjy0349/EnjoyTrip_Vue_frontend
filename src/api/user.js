@@ -15,6 +15,8 @@ async function findById(userid, success, fail) {
   await user.get(`/info/${userid}`).then(success).catch(fail)
 }
 
+async function findByIdWithoutToken(userid, success, fail) {}
+
 async function tokenRegeneration(userinfo, success, fail) {
   user.defaults.headers['Refreshtoken'] = sessionStorage.getItem('refreshToken') //axios header에 refresh-token 셋팅
   await user.post(`/refresh`, userinfo).then(success).catch(fail)

@@ -12,6 +12,7 @@ function totalPage(success, fail) {
 
 function detailArticle(articleno, success, fail) {
   tboard.get(`/list/no/${articleno}`).then(success).catch(fail)
+  // return tboard.get(`/list/no/${articleno}`)
 }
 
 function searchArticleBySubject(subject, param, success, fail) {
@@ -33,7 +34,11 @@ function deleteArticle(articleno, success, fail) {
 }
 
 function getTripRoutes(userId, success, fail) {
-  tboard.get(`route/${userId}`).then(success).catch(fail)
+  tboard.get(`/route/${userId}`).then(success).catch(fail)
+}
+
+function getTripRouteDetails(planId, success, fail) {
+  tboard.get(`/plan/${planId}`).then(success).catch(fail)
 }
 
 export {
@@ -44,5 +49,6 @@ export {
   modifyArticle,
   deleteArticle,
   getTripRoutes,
-  searchArticleBySubject
+  searchArticleBySubject,
+  getTripRouteDetails
 }
