@@ -213,9 +213,11 @@ const moveUserDetail = (userId) => {
             </p>
             <div class="col" v-for="(plan, index) in routeDetails" :key="plan.contentId">
               <img :src="plan.firstImage" style="width: 20vh; height: 15vh" />
-              <p>{{ index + 1 }}일차</p>
+              {{ plan.title }}<br />
+              {{ index + 1 }}일차
             </div>
           </div>
+          <div class="row">예상 경비 : {{ article.cost }}원</div>
           <div class="text-secondary">
             {{ article.content }}
           </div>
@@ -228,7 +230,7 @@ const moveUserDetail = (userId) => {
                 v-for="comment in comments"
                 :key="comment.commentNo"
                 :comment="comment"
-                :userId="article"
+                :userId="article.userId"
               />
               <div class="card shadow-0 border" style="background-color: #f0f2f5">
                 <div class="card-body p-4">
