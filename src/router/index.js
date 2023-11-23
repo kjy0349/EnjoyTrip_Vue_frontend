@@ -1,7 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import MainView from '@/views/MainView.vue'
-import BoardList from '@/components/board/BoardList.vue'
-import { storeToRefs } from 'pinia'
 import { useMemberStore } from '@/api/member'
 
 const onlyAuthUser = async (to, from, next) => {
@@ -13,11 +10,12 @@ const onlyAuthUser = async (to, from, next) => {
     console.log('토큰 유효성 체크하러 가자!!!!')
     await memberStore.getUserInfo(token)
   }
-  if (!memberStore.isValidToken || memberStore.userInfo === null) {
+  if (!memberStore.isValidToken || memberStore.userInfo == null) {
     alert('로그인이 필요한 페이지입니다..')
     // next({ name: "login" });
     router.push({ name: 'user' })
   } else {
+    memberStore.isLogin = true
     console.log('로그인 했다!!!!!!!!!!!!!.')
     next()
   }
@@ -75,7 +73,8 @@ const router = createRouter({
         {
           path: 'tlist',
           name: 'tboard-list',
-          component: () => import('@/components/trip_board/TripBoardList.vue')
+          component: () => import('@/components/trip_board/TripBoardList.vue'),
+          immediate: true
         },
         {
           path: 'view/:articleno?/:userId',
@@ -91,7 +90,7 @@ const router = createRouter({
         },
         {
           path: 'modify/:articleno',
-          name: 'board-modify',
+          name: 'tboard-modify',
           beforeEnter: onlyAuthUser,
           component: () => import('@/components/trip_board/TripBoardModify.vue')
         }

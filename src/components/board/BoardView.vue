@@ -87,7 +87,7 @@ const loadSessionUserImg = () => {
 }
 
 const moveList = () => {
-  router.push({ name: 'board' })
+  router.replace({ name: 'board' })
 }
 function moveModify() {
   router.push({ name: 'board-modify', params: { articleno } })

@@ -1,230 +1,160 @@
 <script setup></script>
 
 <template>
-  <div class="ps-5 pt-5 pe-5">
-    <h3 class="fw-semibold">여러 관광지를 보여드립니다!</h3>
-  </div>
-  <div class="p-5">
-    <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="@/assets/img/boat.jpg" class="w-100" alt="..." />
+  <header class="bg-dark py-5">
+    <div class="container px-5">
+      <div class="row gx-5 align-items-center justify-content-center">
+        <div class="col-lg-8 col-xl-7 col-xxl-6">
+          <div class="my-5 text-center text-xl-start">
+            <h1 class="display-5 fw-bolder text-white mb-2">동행 친구를 찾아보세요.</h1>
+            <p class="lead fw-normal text-white-50 mb-4">
+              동행 친구를 구하기위한 다양한 정보와 커뮤니티를 제공합니다. 약간의 용기만 있다면,
+              당신도 할 수 있어요.
+            </p>
+            <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
+              <router-link :to="{ name: 'tripinfo' }" class="btn btn-primary btn-lg px-4 me-sm-3"
+                >시작해보기</router-link
+              >
+              <a class="btn btn-outline-light btn-lg px-4" href="#features">배워보기</a>
+            </div>
+          </div>
         </div>
-        <div class="carousel-item active">
-          <img src="@/assets/img/boat.jpg" class="w-100" alt="..." />
-        </div>
-        <div class="carousel-item active">
-          <img src="@/assets/img/boat.jpg" class="w-100" alt="..." />
+        <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center">
+          <img class="img-fluid rounded-3 my-5" src="@/assets/img/plane.jpg" alt="..." />
         </div>
       </div>
-      <button
-        class="carousel-control-prev"
-        type="button"
-        data-bs-target="#carouselExampleAutoplaying"
-        data-bs-slide="prev"
-      >
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button
-        class="carousel-control-next"
-        type="button"
-        data-bs-target="#carouselExampleAutoplaying"
-        data-bs-slide="next"
-      >
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
+    </div>
+  </header>
+
+  <!-- Features section-->
+  <section class="py-5" id="features">
+    <div class="container px-5 my-5">
+      <div class="row gx-5">
+        <div class="col-lg-4 mb-5 mb-lg-0">
+          <h2 class="fw-bolder mb-0">동행하기 좋은 날</h2>
+        </div>
+        <div class="col-lg-8">
+          <div class="row gx-5 row-cols-1 row-cols-md-2">
+            <div class="col mb-5 h-100">
+              <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3">
+                <i class="bi bi-collection"></i>
+              </div>
+              <h2 class="h5">동행 구하기</h2>
+              <p class="mb-0">
+                전국에 있는 다양한 사람들과 만나보세요. <br />
+                EnjoyTrip은 전역에서 서비스 됩니다.
+              </p>
+            </div>
+            <div class="col mb-5 h-100">
+              <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3">
+                <i class="bi bi-building"></i>
+              </div>
+              <h2 class="h5">쉽게 보는 사용자 정보</h2>
+              <p class="mb-0">
+                동행하고 싶은 사람을 쉽게 찾을 수 있습니다. <br />
+                나이, 사진 등 나와 맞는 요소를 통해 동행을 찾아보세요.
+              </p>
+            </div>
+            <div class="col mb-5 mb-md-0 h-100">
+              <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3">
+                <i class="bi bi-toggles2"></i>
+              </div>
+              <h2 class="h5">내 맘대로 여행경로</h2>
+              <p class="mb-0">
+                전국 각지에 있는 여행 정보를 통해 나만의 여행 경로를 만들어보세요.<br />
+                완전히 무료.
+              </p>
+            </div>
+            <div class="col h-100">
+              <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3">
+                <i class="bi bi-toggles2"></i>
+              </div>
+              <h2 class="h5">쉽고 빠른 동행인 선택</h2>
+              <p class="mb-0">
+                "클릭" 한 번으로 동행을 시작해보세요. <br />
+                놀랍도록 빠르게 동행을 구할 수 있습니다.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonial section-->
+  <div class="py-5 bg-light">
+    <div class="container px-5 my-5">
+      <div class="row gx-5 justify-content-center">
+        <div class="col-lg-10 col-xl-7">
+          <div class="text-center">
+            <div class="fs-4 mb-4 fst-italic">
+              EnjoyTrip 서비스를 통해 결혼에 골인했습니다! <br />이 서비스가 없었다면 전 아직도 혼자
+              살고 있겠죠..
+            </div>
+            <div class="d-flex align-items-center justify-content-center">
+              <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d" />
+              <div class="fw-bold">
+                9반
+                <span class="fw-bold text-primary mx-1">/</span>
+                무직, 백수
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- 메인 화면 사진 슬라이드 -->
-  <!-- <div
-    id="carouselExampleCaptions"
-    class="carousel slide"
-    data-bs-ride="carousel"
-  >
-    <div class="carousel-indicators">
-      <button
-        type="button"
-        data-bs-target="#carouselExampleCaptions"
-        data-bs-slide-to="0"
-        class="active"
-        aria-current="true"
-        aria-label="Slide 1"
-      ></button>
-      <button
-        type="button"
-        data-bs-target="#carouselExampleCaptions"
-        data-bs-slide-to="1"
-        aria-label="Slide 2"
-      ></button>
-      <button
-        type="button"
-        data-bs-target="#carouselExampleCaptions"
-        data-bs-slide-to="2"
-        aria-label="Slide 3"
-      ></button>
-    </div>
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img src="..." class="d-block w-100" alt="..." />
-        <div class="carousel-caption d-none d-md-block">
-          <h5>First slide label</h5>
-          <p>Some representative placeholder content for the first slide.</p>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <img src="..." class="d-block w-100" alt="..." />
-        <div class="carousel-caption d-none d-md-block">
-          <h5>Second slide label</h5>
-          <p>Some representative placeholder content for the second slide.</p>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <img src="..." class="d-block w-100" alt="..." />
-        <div class="carousel-caption d-none d-md-block">
-          <h5>Third slide label</h5>
-          <p>Some representative placeholder content for the third slide.</p>
+  <!-- Blog preview section-->
+  <section class="py-5">
+    <div class="container px-5 my-5">
+      <div class="row gx-5">
+        <div class="col-lg-4 mb-5">
+          <div class="card h-100 shadow border-0">
+            <img
+              class="card-img-top"
+              src="https://dummyimage.com/600x350/ced4da/6c757d"
+              alt="..."
+            />
+            <div class="card-body p-4">
+              <div class="badge bg-primary bg-gradient rounded-pill mb-2">Review</div>
+              <a class="text-decoration-none link-dark stretched-link" href="#!"
+                ><h5 class="card-title mb-3">Blog post title</h5></a
+              >
+              <p class="card-text mb-0">
+                Some quick example text to build on the card title and make up the bulk of the
+                card's content.
+              </p>
+            </div>
+            <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
+              <div class="d-flex align-items-end justify-content-between">
+                <div class="d-flex align-items-center">
+                  <img
+                    class="rounded-circle me-3"
+                    src="https://dummyimage.com/40x40/ced4da/6c757d"
+                    alt="..."
+                  />
+                  <div class="small">
+                    <div class="fw-bold">Kelly Rowan</div>
+                    <div class="text-muted">March 12, 2023 &middot; 6 min read</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <button
-      class="carousel-control-prev"
-      type="button"
-      data-bs-target="#carouselExampleCaptions"
-      data-bs-slide="prev"
-    >
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button
-      class="carousel-control-next"
-      type="button"
-      data-bs-target="#carouselExampleCaptions"
-      data-bs-slide="next"
-    >
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div> -->
-
-  <div class="container">
-    <h1 class="fw-light text-center text-lg-start mt-4 mb-0">Thumbnail Gallery</h1>
-
-    <hr class="mt-2 mb-5" />
-
-    <div class="row text-center text-lg-start">
-      <div class="col-lg-3 col-md-4 col-6">
-        <a href="#" class="d-block mb-4 h-100">
-          <img
-            class="img-fluid img-thumbnail"
-            src="https://source.unsplash.com/pWkk7iiCoDM/400x300"
-            alt=""
-          />
-        </a>
-      </div>
-      <div class="col-lg-3 col-md-4 col-6">
-        <a href="#" class="d-block mb-4 h-100">
-          <img
-            class="img-fluid img-thumbnail"
-            src="https://source.unsplash.com/aob0ukAYfuI/400x300"
-            alt=""
-          />
-        </a>
-      </div>
-      <div class="col-lg-3 col-md-4 col-6">
-        <a href="#" class="d-block mb-4 h-100">
-          <img
-            class="img-fluid img-thumbnail"
-            src="https://source.unsplash.com/EUfxH-pze7s/400x300"
-            alt=""
-          />
-        </a>
-      </div>
-      <div class="col-lg-3 col-md-4 col-6">
-        <a href="#" class="d-block mb-4 h-100">
-          <img
-            class="img-fluid img-thumbnail"
-            src="https://source.unsplash.com/M185_qYH8vg/400x300"
-            alt=""
-          />
-        </a>
-      </div>
-      <div class="col-lg-3 col-md-4 col-6">
-        <a href="#" class="d-block mb-4 h-100">
-          <img
-            class="img-fluid img-thumbnail"
-            src="https://source.unsplash.com/sesveuG_rNo/400x300"
-            alt=""
-          />
-        </a>
-      </div>
-      <div class="col-lg-3 col-md-4 col-6">
-        <a href="#" class="d-block mb-4 h-100">
-          <img
-            class="img-fluid img-thumbnail"
-            src="https://source.unsplash.com/AvhMzHwiE_0/400x300"
-            alt=""
-          />
-        </a>
-      </div>
-      <div class="col-lg-3 col-md-4 col-6">
-        <a href="#" class="d-block mb-4 h-100">
-          <img
-            class="img-fluid img-thumbnail"
-            src="https://source.unsplash.com/2gYsZUmockw/400x300"
-            alt=""
-          />
-        </a>
-      </div>
-      <div class="col-lg-3 col-md-4 col-6">
-        <a href="#" class="d-block mb-4 h-100">
-          <img
-            class="img-fluid img-thumbnail"
-            src="https://source.unsplash.com/EMSDtjVHdQ8/400x300"
-            alt=""
-          />
-        </a>
-      </div>
-      <div class="col-lg-3 col-md-4 col-6">
-        <a href="#" class="d-block mb-4 h-100">
-          <img
-            class="img-fluid img-thumbnail"
-            src="https://source.unsplash.com/8mUEy0ABdNE/400x300"
-            alt=""
-          />
-        </a>
-      </div>
-      <div class="col-lg-3 col-md-4 col-6">
-        <a href="#" class="d-block mb-4 h-100">
-          <img
-            class="img-fluid img-thumbnail"
-            src="https://source.unsplash.com/G9Rfc1qccH4/400x300"
-            alt=""
-          />
-        </a>
-      </div>
-      <div class="col-lg-3 col-md-4 col-6">
-        <a href="#" class="d-block mb-4 h-100">
-          <img
-            class="img-fluid img-thumbnail"
-            src="https://source.unsplash.com/aJeH0KcFkuc/400x300"
-            alt=""
-          />
-        </a>
-      </div>
-      <div class="col-lg-3 col-md-4 col-6">
-        <a href="#" class="d-block mb-4 h-100">
-          <img
-            class="img-fluid img-thumbnail"
-            src="https://source.unsplash.com/p2TQ-3Bh3Oo/400x300"
-            alt=""
-          />
-        </a>
-      </div>
-    </div>
-  </div>
+  </section>
 </template>
 
-<style scoped></style>
+<style scoped>
+.feature {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 3rem;
+  width: 3rem;
+  font-size: 1.5rem;
+}
+</style>
