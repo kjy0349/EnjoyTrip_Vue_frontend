@@ -32,6 +32,9 @@ dependencies:
   pinia-plugin-persistedstate:
     specifier: ^3.2.0
     version: 3.2.0(pinia@2.1.7)
+  pnpm:
+    specifier: ^8.10.5
+    version: 8.10.5
   vue:
     specifier: ^3.3.4
     version: 3.3.8
@@ -1696,6 +1699,12 @@ packages:
       '@vue/devtools-api': 6.5.1
       vue: 3.3.8
       vue-demi: 0.14.6(vue@3.3.8)
+    dev: false
+
+  /pnpm@8.10.5:
+    resolution: {integrity: sha512-nBYfQz2FVRxY8bOhCxjMPfcrWgLSyu5lZswFtvIK3e+UfnldkMOQM7+S3lUXfq1p2H9iqdqtyR56LjtY9JNToA==}
+    engines: {node: '>=16.14'}
+    hasBin: true
     dev: false
 
   /postcss-selector-parser@6.0.13:

@@ -144,7 +144,7 @@ const moveHome = () => {
         <div class="mb-3">
           <select v-model="user.age">
             <option disabled value="">나이를 선택하세요.</option>
-            <option v-for="i in 100" :key="index" :value="i">{{ i }}</option>
+            <option v-for="i in 100" :value="i">{{ i }}</option>
           </select>
         </div>
         <div class="mb-3 d-flex email form-control">
