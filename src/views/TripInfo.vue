@@ -239,7 +239,11 @@ const moveTripPlan = () => {
           <template #item="{ element }">
             <tr>
               <td>
-                <img :src="element.firstImage" style="width: 120px; height: 120px" />
+                <img
+                  :src="element.firstImage"
+                  style="width: 120px; height: 120px"
+                  onerror="this.src='src/assets/img/planeIcon.png'"
+                />
               </td>
               <td>
                 <tr>
@@ -272,7 +276,11 @@ const moveTripPlan = () => {
       >
         <template #item="{ element }">
           <div class="m-2">
-            <img :src="element.firstImage" style="width: 120px; height: 120px" />
+            <img
+              :src="element.firstImage"
+              style="width: 120px; height: 120px"
+              onerror="this.src='src/assets/img/planeIcon.png'"
+            />
             {{ element.title }}
           </div>
         </template>

@@ -37,7 +37,7 @@ const appendPlace = (place) => {
   if (planPlaces.value.size < diffDateFun.value) {
     planPlaces.value.set(planPlaces.value.size, place)
   } else {
-    alert('더는 못 넣어 이놈아..!!')
+    alert('이미 모든 일자의 계획을 채웠습니다.')
   }
 }
 
