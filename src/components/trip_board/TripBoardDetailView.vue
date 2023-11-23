@@ -167,7 +167,7 @@ function moveModify() {
 }
 
 const moveUserDetail = (userId) => {
-  if (userId == userInfo.value.userId) {
+  if (userId == memberStore.userInfo.value.userId) {
     router.push({ name: 'user-info' })
   } else {
     router.push({ name: 'user-detail', params: { userId } })
