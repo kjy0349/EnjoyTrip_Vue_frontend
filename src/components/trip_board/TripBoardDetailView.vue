@@ -133,6 +133,12 @@ function onCreateComment() {
     alert('로그인 후 댓글을 달아주세요!')
     router.push({ name: 'user-login' })
   } else {
+    for (let comment of comments.value) {
+      if (comment.userId == memberStore.userInfo.userId) {
+        alert('여행계획에 참가 신청하는것은 한 번만 가능합니다.')
+        return
+      }
+    }
     writeCommentObj.value.articleNo = articleno
     writeCommentObj.value.userId = memberStore.userInfo.userId
     // TODO: 세션에 있는 유저의 ID값을 가져와서 content.value.userId값에 넣을 것

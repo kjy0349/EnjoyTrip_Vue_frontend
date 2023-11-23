@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import { getCityOptions, getAttractionList } from '@/api/map.js'
 import draggable from 'vuedraggable'
 import { useRouter } from 'vue-router'
@@ -12,7 +12,6 @@ const plandata = ref([])
 const planStore = usePlanStore()
 
 let map = null
-
 const SELECT_ID = 'search-area-sido'
 getCityOptions(SELECT_ID)
 
@@ -22,9 +21,10 @@ async function showAttractionList() {
   if (tripdata.value.length > 0) {
     isShow.value = true
     displayMarkers(tripdata)
-  } else isShow.value = false
-
-  console.log(tripdata.value)
+  } else {
+    isShow.value = false
+    alert('검색 결과가 존재하지 않습니다.')
+  }
 }
 
 const markers = ref([])
@@ -166,8 +166,13 @@ onMounted(() => {
 })
 
 const moveTripPlan = () => {
-  planStore.addPlan(plandata.value)
-  router.push({ name: 'trip-plan' })
+  if (plandata.value.length >= 15) {
+    alert('여행 계획이 너무 많습니다. 최대치에 도달했습니다. 다시 담아주세요.')
+    router.go()
+  } else {
+    planStore.addPlan(plandata.value)
+    router.push({ name: 'trip-plan' })
+  }
 }
 </script>
 
@@ -227,7 +232,7 @@ const moveTripPlan = () => {
         <draggable
           v-model="tripdata"
           tag="tbody"
-          :group="{ name: 'place', pull: 'clone', put: false }"
+          :group="{ name: 'place', put: false }"
           item-key="contentId"
           style="display: block; height: 80vh; overflow: auto"
         >
@@ -260,8 +265,8 @@ const moveTripPlan = () => {
       <draggable
         v-model="plandata"
         tag="div"
-        group="place"
-        item-key="contentId"
+        :group="{ name: 'place' }"
+        itemKey="contentId"
         draggable="false"
         style="display: block; height: 80vh; overflow: auto"
       >

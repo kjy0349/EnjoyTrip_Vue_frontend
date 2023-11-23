@@ -34,12 +34,12 @@ export const useMemberStore = defineStore(
             isValidToken.value = true
             sessionStorage.setItem('accessToken', accessToken)
             sessionStorage.setItem('refreshToken', refreshToken)
-            console.log('sessiontStorage에 담았다', isLogin.value)
           } else {
             console.log('로그인 실패했다')
             isLogin.value = false
             isLoginError.value = true
             isValidToken.value = false
+            alert('올바르지 않은 아이디/비밀번호 입니다.')
           }
         },
         (error) => {
@@ -59,6 +59,7 @@ export const useMemberStore = defineStore(
             console.log('3. getUserInfo data >> ', response.data)
           } else {
             console.log('유저 정보 없음!!!!')
+            isLogin.value = false
           }
         },
         async (error) => {

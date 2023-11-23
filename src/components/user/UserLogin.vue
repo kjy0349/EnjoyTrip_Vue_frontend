@@ -16,12 +16,13 @@ const loginUser = ref({
 })
 
 const onLogin = async () => {
+  console.log('login ing!!!! !!!')
   await userLogin(loginUser.value)
   let token = sessionStorage.getItem('accessToken')
-  if (isLogin) {
+  if (isLogin.value) {
     getUserInfo(token)
+    router.push('/')
   }
-  router.push('/')
 }
 </script>
 
