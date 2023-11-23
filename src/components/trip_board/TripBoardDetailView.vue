@@ -161,7 +161,11 @@ function moveModify() {
 }
 
 const moveUserDetail = (userId) => {
-  router.push({ name: 'user-detail', params: { userId } })
+  if (userId == userInfo.value.userId) {
+    router.push({ name: 'user-info' })
+  } else {
+    router.push({ name: 'user-detail', params: { userId } })
+  }
 }
 </script>
 
@@ -169,16 +173,12 @@ const moveUserDetail = (userId) => {
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-10">
-        <h2 class="my-3 py-3 shadow-sm bg-light text-center">
-          <mark class="sky">글보기</mark>
+        <h2 class="mt-3 py-3 shadow-sm bg-light text-center">
+          {{ article.subject }}
         </h2>
       </div>
       <div class="col-lg-10 text-start">
-        <div class="row my-2">
-          <h2 class="text-secondary px-5">
-            {{ article.subject }}
-          </h2>
-        </div>
+        <div class="row my-2"></div>
         <div class="row">
           <div class="col-md-8">
             <div class="clearfix align-content-center">
@@ -233,7 +233,7 @@ const moveUserDetail = (userId) => {
               {{ index + 1 }}일차
             </div>
           </div>
-          <div class="row">예상 경비 : {{ article.cost }}원</div>
+          <div class="row my-5">예상 경비 : {{ article.cost }}원</div>
           <div class="text-secondary">
             {{ article.content }}
           </div>

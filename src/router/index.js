@@ -114,7 +114,7 @@ const router = createRouter({
           component: () => import('@/components/user/UserJoin.vue')
         },
         {
-          path: 'info',
+          path: 'info/:modifyFlag',
           name: 'user-info',
           beforeEnter: onlyAuthUser,
           component: () => import('@/components/user/UserInfo.vue')
@@ -129,6 +129,7 @@ const router = createRouter({
     {
       path: '/trip-plan',
       name: 'trip-plan',
+      beforeEnter: onlyAuthUser,
       component: () => import('@/views/TripPlanView.vue')
     },
     {

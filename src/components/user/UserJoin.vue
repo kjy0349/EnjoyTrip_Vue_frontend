@@ -33,6 +33,7 @@ const user = ref({
   emailId: '',
   emailDomain: '',
   imgSrc: '',
+  content: '',
   mbti: '',
   gender: '',
   age: 0
@@ -50,6 +51,7 @@ const onJoin = () => {
   formData.append('userName', user.value.userName)
   formData.append('emailId', user.value.emailId)
   formData.append('emailDomain', user.value.emailDomain)
+  formData.append('content', user.value.content)
   formData.append('imgSrc', user.value.imgSrc)
   formData.append('mbti', user.value.mbti)
   formData.append('gender', user.value.gender)
@@ -167,6 +169,17 @@ const moveHome = () => {
             <option value="ssafy.com">ssafy.com</option>
             <option value="google.com">google.com</option>
           </select>
+        </div>
+        <div class="mb-3">
+          <textarea
+            v-model="user.content"
+            type="text"
+            class="form-control"
+            id="userContent"
+            name="userContent"
+            aria-describedby="emailHelp"
+            placeholder="자기소개"
+          />
         </div>
         <div class="mb-3 d-flex form-control">
           <input type="file" @change="onFileInfo" ref="servImage" />

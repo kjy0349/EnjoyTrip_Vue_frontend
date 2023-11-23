@@ -78,8 +78,6 @@ const loadImg = () => {
           <div class="card-body">
             <h5 class="card-title">{{ userInfo.userName }}</h5>
             <p class="card-text">
-              <strong>ID:</strong> {{ userInfo.userId }}<br />
-              <strong>Email:</strong> {{ userInfo.emailId }}@{{ userInfo.emailDomain }} <br />
               <strong>MBTI:</strong> {{ userInfo.mbti }}<br />
               <strong>성별:</strong> {{ userInfo.gender }}<br />
               <strong>나이:</strong> {{ userInfo.age }}<br />
@@ -87,8 +85,6 @@ const loadImg = () => {
           </div>
         </div>
       </div>
-      <!-- input 가능하게 -->
-      <div>별점</div>
     </div>
   </div>
 </template>

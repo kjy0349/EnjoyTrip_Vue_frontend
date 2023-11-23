@@ -28,4 +28,12 @@ async function getMyTripInfos(userid, success, fail) {
   await user.get(`/mytrip/${userid}`).then(success).catch(fail)
 }
 
-export { userConfirm, findById, tokenRegeneration, logout, getMyTripInfos }
+function deleteUser(userid, success, fail) {
+  user.delete(`/${userid}`).then(success).catch(fail)
+}
+
+function modifyUser(member, success, fail) {
+  user.put(`/modify`, JSON.stringify(member)).then(success).catch(fail)
+}
+
+export { userConfirm, findById, tokenRegeneration, logout, getMyTripInfos, deleteUser, modifyUser }

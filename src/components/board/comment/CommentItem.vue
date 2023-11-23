@@ -75,7 +75,11 @@ const onCommentDelete = () => {
 }
 
 const moveUserDetail = (userId) => {
-  router.push({ name: 'user-detail', params: { userId } })
+  if (userId == userInfo.value.userId) {
+    router.push({ name: 'user-info' })
+  } else {
+    router.push({ name: 'user-detail', params: { userId } })
+  }
 }
 </script>
 

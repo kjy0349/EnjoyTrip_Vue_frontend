@@ -85,7 +85,7 @@ const { isLogin, userInfo } = storeToRefs(store)
                   <li><hr class="dropdown-divider" /></li>
                   <li>
                     <RouterLink
-                      :to="{ name: 'user-info' }"
+                      :to="{ name: 'user-info', params: { modifyFlag: true } }"
                       class="dropdown-item text-decoration-none text-black"
                       >회원정보</RouterLink
                     >

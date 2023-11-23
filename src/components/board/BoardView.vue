@@ -94,7 +94,11 @@ function moveModify() {
 }
 
 const moveUserDetail = (userId) => {
-  router.push({ name: 'user-detail', params: { userId } })
+  if (userId == memberStore.userInfo.userId) {
+    router.push({ name: 'user-info' })
+  } else {
+    router.push({ name: 'user-detail', params: { userId } })
+  }
 }
 
 function onDeleteArticle() {
@@ -172,15 +176,11 @@ function onCreateComment() {
     <div class="row justify-content-center">
       <div class="col-lg-10">
         <h2 class="my-3 py-3 shadow-sm bg-light text-center">
-          <mark class="sky">글보기</mark>
+          {{ article.subject }}
         </h2>
       </div>
       <div class="col-lg-10 text-start">
-        <div class="row my-2">
-          <h2 class="text-secondary px-5">
-            {{ article.subject }}
-          </h2>
-        </div>
+        <div class="row my-2"></div>
         <div class="row">
           <div class="col-md-8">
             <div class="clearfix align-content-center">
