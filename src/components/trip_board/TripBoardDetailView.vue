@@ -234,7 +234,11 @@ const moveUserDetail = (userId) => {
               {{ routeDetails[routeDetails.length - 1].placeDate }} -->
             </p>
             <div class="col" v-for="(plan, index) in routeDetails" :key="plan.contentId">
-              <img :src="plan.firstImage" style="width: 20vh; height: 15vh" /><br />
+              <img
+                :src="plan.firstImage"
+                style="width: 20vh; height: 15vh"
+                onerror="this.src='src/assets/img/planeIcon.png'"
+              /><br />
               {{ plan.title }}<br />
               {{ index + 1 }}일차
             </div>
