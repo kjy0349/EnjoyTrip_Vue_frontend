@@ -291,10 +291,20 @@ function onCreateComment() {
             <button type="button" class="btn btn-outline-primary mb-3" @click="moveList">
               글목록
             </button>
-            <button type="button" class="btn btn-outline-success mb-3 ms-1" @click="moveModify">
+            <button
+              v-if="memberStore.userInfo.userId == article.userId"
+              type="button"
+              class="btn btn-outline-success mb-3 ms-1"
+              @click="moveModify"
+            >
               글수정
             </button>
-            <button type="button" class="btn btn-outline-danger mb-3 ms-1" @click="onDeleteArticle">
+            <button
+              v-if="memberStore.userInfo.userId == article.userId"
+              type="button"
+              class="btn btn-outline-danger mb-3 ms-1"
+              @click="onDeleteArticle"
+            >
               글삭제
             </button>
           </div>
