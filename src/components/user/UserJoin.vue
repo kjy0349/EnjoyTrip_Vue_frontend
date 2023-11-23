@@ -45,6 +45,10 @@ const onFileInfo = (event) => {
 }
 
 const onJoin = () => {
+  if (!user.value.imgSrc) {
+    alert('프로필 사진이 없습니다. 올바른 이미지를 업로드해주세요.')
+    return
+  }
   const formData = new FormData()
   formData.append('userId', user.value.userId)
   formData.append('userPass', user.value.userPass)
@@ -182,7 +186,7 @@ const moveHome = () => {
           />
         </div>
         <div class="mb-3 d-flex form-control">
-          <input type="file" @change="onFileInfo" ref="servImage" />
+          <input id="fileInput" type="file" @change="onFileInfo" ref="servImage" />
         </div>
         <!-- <div class="mb-3 d-flex form-control">
           <img :src="img" alt="" />
