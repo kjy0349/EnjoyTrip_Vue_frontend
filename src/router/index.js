@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import MainView from '@/views/MainView.vue'
 import BoardList from '@/components/board/BoardList.vue'
+import { listArticle } from '@/api/board'
 import { storeToRefs } from 'pinia'
 import { useMemberStore } from '@/api/member'
 
@@ -75,7 +76,8 @@ const router = createRouter({
         {
           path: 'tlist',
           name: 'tboard-list',
-          component: () => import('@/components/trip_board/TripBoardList.vue')
+          component: () => import('@/components/trip_board/TripBoardList.vue'),
+          immediate: true
         },
         {
           path: 'view/:articleno?/:userId',
@@ -91,7 +93,7 @@ const router = createRouter({
         },
         {
           path: 'modify/:articleno',
-          name: 'board-modify',
+          name: 'tboard-modify',
           beforeEnter: onlyAuthUser,
           component: () => import('@/components/trip_board/TripBoardModify.vue')
         }

@@ -46,7 +46,7 @@ onMounted(async () => {
         :key="article.articleNo"
       >
         <img class="card-img-top" :src="article.image" alt="Card image cap" />
-        <div class="card-body">
+        <div class="card-body h-50">
           <h5 class="card-title">게시글 제목 : {{ article.subject }}</h5>
           <p class="card-text overflow-hidden">
             {{ article.content }}
@@ -63,7 +63,7 @@ onMounted(async () => {
         </div>
       </div>
     </div>
-    <p style="text-align: start; font-size: larger" v-if="pickedTripLists.length > 0">
+    <p class="mt-5" style="text-align: start; font-size: larger" v-if="pickedTripLists.length > 0">
       내가 뽑힌 여행 계획들
     </p>
     <p style="text-align: start; font-size: larger" v-else>

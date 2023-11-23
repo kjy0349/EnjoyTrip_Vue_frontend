@@ -154,10 +154,10 @@ function onCreateComment() {
 }
 
 const moveList = () => {
-  router.push({ name: 'board' })
+  router.push({ name: 'tboard' })
 }
 function moveModify() {
-  router.push({ name: 'board-modify', params: { articleno } })
+  router.push({ name: 'tboard-modify', params: { articleno } })
 }
 
 const moveUserDetail = (userId) => {

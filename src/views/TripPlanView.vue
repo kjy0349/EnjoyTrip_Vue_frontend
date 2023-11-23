@@ -127,7 +127,6 @@ const reset = () => {
     </div>
     <div class="row mt-5 shadow p-3 bg-body-tertiary rounded">
       <TripItem
-        class="col-2"
         v-for="place in plan"
         :key="place.contentId"
         :place="place"
@@ -166,17 +165,6 @@ const reset = () => {
       </div>
       <div class="col-4"></div>
     </div>
-
-    <!-- <draggable
-        v-model="plan"
-        :group="{ name: 'place', pull: 'clone', put: false }"
-        item-key="contentId"
-        class="row"
-      >
-        <template #item="{ element }">
-          <TripItem :place="element"></TripItem>
-        </template>
-      </draggable> -->
   </div>
 </template>
 

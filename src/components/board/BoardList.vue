@@ -66,9 +66,9 @@ const moveWrite = () => {
   router.push({ name: 'board-write' })
 }
 
-onMounted(() => {
+onMounted(async () => {
+  await getArticles()
   getTotal()
-  getArticles()
 })
 
 const search = () => {
@@ -96,8 +96,8 @@ const getTotal = () => {
   )
 }
 
-const getArticles = () => {
-  listArticle(
+const getArticles = async () => {
+  await listArticle(
     param.value.pgno,
     param.value.pageSize,
     ({ data }) => {
