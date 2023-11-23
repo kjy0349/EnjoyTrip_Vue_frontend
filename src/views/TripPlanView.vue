@@ -66,20 +66,26 @@ const insertTime = () => {
 }
 
 const makeTripPlan = () => {
-  insertTime()
-  insertPlanInfo(
-    tripRoute.value,
-    routeDetailList.value,
-    () => {
-      alert('계획 등록 성공!')
-      console.log('plan 등록 성공')
-      goMain()
-    },
-    (error) => {
-      alert('여행 경로 이름을 다시 지어주세요')
-      console.log('실패')
-    }
-  )
+  if (!startDate.value || !endDate.value) {
+    alert('종료일과 시작일을 선택해주세요.')
+  } else if (diffDateFun.value >= 30) {
+    alert('계획의 길이가 너무 큽니다.')
+  } else {
+    insertTime()
+    insertPlanInfo(
+      tripRoute.value,
+      routeDetailList.value,
+      () => {
+        alert('계획 등록 성공!')
+        console.log('plan 등록 성공')
+        goMain()
+      },
+      (error) => {
+        alert('여행 경로 이름을 다시 지어주세요')
+        console.log('실패')
+      }
+    )
+  }
 }
 
 const tripRoute = ref({
