@@ -12,17 +12,15 @@
               당신도 할 수 있어요.
             </p>
             <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
-              <a class="btn btn-primary btn-lg px-4 me-sm-3" href="#features">시작해보기</a>
-              <a class="btn btn-outline-light btn-lg px-4" href="#!">배워보기</a>
+              <router-link :to="{ name: 'tripinfo' }" class="btn btn-primary btn-lg px-4 me-sm-3"
+                >시작해보기</router-link
+              >
+              <a class="btn btn-outline-light btn-lg px-4" href="#features">배워보기</a>
             </div>
           </div>
         </div>
         <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center">
-          <img
-            class="img-fluid rounded-3 my-5"
-            src="https://dummyimage.com/600x400/343a40/6c757d"
-            alt="..."
-          />
+          <img class="img-fluid rounded-3 my-5" src="@/assets/img/plane.jpg" alt="..." />
         </div>
       </div>
     </div>
@@ -33,7 +31,7 @@
     <div class="container px-5 my-5">
       <div class="row gx-5">
         <div class="col-lg-4 mb-5 mb-lg-0">
-          <h2 class="fw-bolder mb-0">동행하기 좋은 날.</h2>
+          <h2 class="fw-bolder mb-0">동행하기 좋은 날</h2>
         </div>
         <div class="col-lg-8">
           <div class="row gx-5 row-cols-1 row-cols-md-2">
@@ -110,17 +108,6 @@
   <!-- Blog preview section-->
   <section class="py-5">
     <div class="container px-5 my-5">
-      <div class="row gx-5 justify-content-center">
-        <div class="col-lg-8 col-xl-6">
-          <div class="text-center">
-            <h2 class="fw-bolder">From our blog</h2>
-            <p class="lead fw-normal text-muted mb-5">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eaque fugit ratione dicta
-              mollitia. Officiis ad.
-            </p>
-          </div>
-        </div>
-      </div>
       <div class="row gx-5">
         <div class="col-lg-4 mb-5">
           <div class="card h-100 shadow border-0">
@@ -130,7 +117,7 @@
               alt="..."
             />
             <div class="card-body p-4">
-              <div class="badge bg-primary bg-gradient rounded-pill mb-2">News</div>
+              <div class="badge bg-primary bg-gradient rounded-pill mb-2">Review</div>
               <a class="text-decoration-none link-dark stretched-link" href="#!"
                 ><h5 class="card-title mb-3">Blog post title</h5></a
               >
