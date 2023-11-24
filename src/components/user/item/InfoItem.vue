@@ -134,7 +134,7 @@ const moveUserInfo = () => {
                     :readonly="modifyFlag"
                   />
                 </div>
-                <div v-if="!modifyFlag">
+                <div class="ps-0 text-start ms-auto">
                   <strong>자기소개:</strong>
                   <input
                     class="ms-2"

@@ -81,6 +81,7 @@ const loadImg = () => {
               <strong>MBTI:</strong> {{ userInfo.mbti }}<br />
               <strong>성별:</strong> {{ userInfo.gender }}<br />
               <strong>나이:</strong> {{ userInfo.age }}<br />
+              <strong>나이:</strong> {{ userInfo.content }}<br />
             </p>
           </div>
         </div>
