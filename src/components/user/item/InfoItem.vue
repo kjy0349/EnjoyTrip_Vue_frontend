@@ -134,6 +134,15 @@ const moveUserInfo = () => {
                     :readonly="modifyFlag"
                   />
                 </div>
+                <div v-if="!modifyFlag">
+                  <strong>자기소개:</strong>
+                  <input
+                    class="ms-2"
+                    v-model="userInfo.content"
+                    :readonly="modifyFlag"
+                    style="border: none"
+                  /><br />
+                </div>
               </div>
             </div>
           </div>
