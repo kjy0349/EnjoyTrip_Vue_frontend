@@ -48,7 +48,8 @@ const router = createRouter({
         {
           path: 'view/:articleno?/:userId',
           name: 'board-view',
-          component: () => import('@/components/board/BoardView.vue')
+          component: () => import('@/components/board/BoardView.vue'),
+          beforeEnter: onlyAuthUser
         },
         {
           path: 'write',
